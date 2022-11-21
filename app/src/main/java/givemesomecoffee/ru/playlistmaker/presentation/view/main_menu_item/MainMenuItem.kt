@@ -24,4 +24,8 @@ class MainMenuItem(context: Context, attributes: AttributeSet? = null) :
             attrs.recycle()
         }
     }
+
+    fun getTitle(): String? {
+        return findViewById<TextView>(R.id.content)?.text?.toString()
+    }
 }
