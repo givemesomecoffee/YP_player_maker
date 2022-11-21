@@ -25,6 +25,21 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".presentation.screen.MediaActivity"
+            android:theme="@style/Theme.PlaylistMaker.Light"
+            android:parentActivityName=".presentation.screen.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.screen.SearchActivity"
+            android:theme="@style/Theme.PlaylistMaker.Light"
+            android:parentActivityName=".presentation.screen.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.screen.SettingsActivity"
+            android:theme="@style/Theme.PlaylistMaker.Light"
+            android:parentActivityName=".presentation.screen.MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.presentation.utils.initSecondaryScreen
 
-class SettingsActivity : AppCompatActivity() {
+class MediaActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        initSecondaryScreen(getString(R.string.title_settings))
+        setContentView(R.layout.activity_media)
+        initSecondaryScreen(getString(R.string.title_media))
     }
 }
