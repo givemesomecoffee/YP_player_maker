@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingVertical="@dimen/screen_vertical_padding"
+    tools:context=".presentation.screen.SettingsActivity">
+
+    <givemesomecoffee.ru.playlistmaker.presentation.view.custom_cell.CustomCell
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cell_title="@string/settings_title_theme"
+        app:cell_type="cell_switch" />
+
+    <givemesomecoffee.ru.playlistmaker.presentation.view.custom_cell.CustomCell
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cell_icon="@drawable/ic_share"
+        app:cell_title="@string/settings_title_share" />
+
+    <givemesomecoffee.ru.playlistmaker.presentation.view.custom_cell.CustomCell
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cell_icon="@drawable/ic_support"
+        app:cell_title="@string/settings_title_support" />
+
+    <givemesomecoffee.ru.playlistmaker.presentation.view.custom_cell.CustomCell
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cell_title="@string/settings_title_user_agreement" />
+</LinearLayout>
