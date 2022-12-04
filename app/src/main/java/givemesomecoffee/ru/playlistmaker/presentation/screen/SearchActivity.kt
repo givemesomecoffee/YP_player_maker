@@ -24,6 +24,17 @@ class SearchActivity : AppCompatActivity() {
         initView()
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        savedInstanceState.getCharSequence(SEARCH_TEXT_KEY)?.let {
+            searchField?.setText(it)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putCharSequence(SEARCH_TEXT_KEY, searchField?.text)
+    }
     private fun initView() {
         val search = findViewById<FrameLayout>(R.id.search)
         searchClose = search.findViewById(R.id.search_close)
@@ -54,5 +65,9 @@ class SearchActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    companion object{
+        const val SEARCH_TEXT_KEY = "search_text"
     }
 }
