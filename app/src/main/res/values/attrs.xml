@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <declare-styleable name="MainMenuItem">
+            <attr name="main_menu_icon" format="reference" />
+            <attr name="main_menu_title" format="string"/>
+        </declare-styleable>
+    <declare-styleable name="CustomCell">
+        <attr name="cell_type" format="enum">
+            <enum name="cell_switch" value="1"/>
+            <enum name="cell_icon" value="0"/>
+        </attr>
+        <attr name="cell_title" format="string"/>
+        <attr name="cell_icon" format="reference" />
+    </declare-styleable>
+</resources>
