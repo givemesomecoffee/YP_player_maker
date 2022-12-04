@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Typography.Medium.22" parent="">
-        <item name="android:textSize">22sp</item>
-        <item name="lineHeight">26sp</item>
-        <item name="fontWeight">500</item>
+    <style name="Button.Primary" parent="">
+
     </style>
-    <style name="Typography.Regular.16" parent="">
-        <item name="android:textSize">16sp</item>
-        <item name="lineHeight">18.75sp</item>
-        <item name="fontWeight">400</item>
+    <style name="CustomWidget.MaterialComponents.CompoundButton.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="materialThemeOverlay">@style/ColorSwitchStyle</item>
+    </style>
+    <style name="ColorSwitchStyle">
+        <item name="colorControlActivated">@color/yp_blue</item>
+        <item name="colorSurface">@color/yp_text_gray</item>
+        <item name="colorOnSurface">@color/yp_light_Gray</item>
     </style>
 </resources>

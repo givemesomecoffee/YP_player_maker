@@ -11,8 +11,8 @@
         android:drawablePadding="8dp"
         android:gravity="center"
         android:layout_gravity="center"
+        style="@style/Primary.Medium.22"
         android:textColor="@color/black"
-        style="@style/Typography.Medium.22"
         tools:drawableStart="@drawable/ic_search"
         tools:text="Test" />
 </FrameLayout>
