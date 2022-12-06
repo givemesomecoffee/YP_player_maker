@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.isVisible
+import com.google.android.material.switchmaterial.SwitchMaterial
 import givemesomecoffee.ru.playlistmaker.R
 
 class CustomCell(context: Context, attributes: AttributeSet? = null) :
@@ -26,7 +26,7 @@ class CustomCell(context: Context, attributes: AttributeSet? = null) :
                 isVisible = type == TYPE_SIMPLE
                 icon?.let { setImageDrawable(it) }
             }
-            findViewById<SwitchCompat>(R.id.switch_control).isVisible = type == TYPE_SWITCH
+            findViewById<SwitchMaterial>(R.id.switch_control).isVisible = type == TYPE_SWITCH
             attrs.recycle()
         }
 
