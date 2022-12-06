@@ -29,7 +29,7 @@ class SettingsActivity : AppCompatActivity() {
         share?.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, SHARE_APP_LINK)
+                putExtra(Intent.EXTRA_TEXT, getString(R.string.share_app_url))
                 type = "text/plain"
             }
 
@@ -43,7 +43,7 @@ class SettingsActivity : AppCompatActivity() {
             )
         }
         agreement?.setOnClickListener {
-            openWebPage(USER_AGREEMENT_URL)
+            openWebPage(getString(R.string.user_agreement_url))
         }
     }
 
@@ -56,16 +56,10 @@ class SettingsActivity : AppCompatActivity() {
     private fun composeEmail(subject: String, body: String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse("mailto:")
-            putExtra(Intent.EXTRA_EMAIL, listOf(SUPPORT_EMAIL).toTypedArray())
+            putExtra(Intent.EXTRA_EMAIL, listOf(getString(R.string.support_email)).toTypedArray())
             putExtra(Intent.EXTRA_SUBJECT, subject)
             putExtra(Intent.EXTRA_TEXT, body)
         }
         validateEvent(intent)
-    }
-
-    companion object {
-        const val USER_AGREEMENT_URL = "https://yandex.ru/legal/practicum_offer/"
-        const val SUPPORT_EMAIL = "givemesomecoffee@yandex.ru"
-        const val SHARE_APP_LINK = "https://practicum.yandex.ru/android-developer/"
     }
 }
