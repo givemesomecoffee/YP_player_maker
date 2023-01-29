@@ -3,5 +3,6 @@
     <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
         <item name="titleTextAppearance">@style/Primary.Medium.22</item>
         <item name="android:background">?colorPrimary</item>
+        <item name="titleTextColor">?colorOnPrimary</item>
     </style>
 </resources>

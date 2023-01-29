@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="yp_text_primary">@color/yp_white</color>
+    <color name="yp_text_secondary">@color/yp_white</color>
     <color name="yp_icon_primary">@color/yp_white</color>
+    <color name="yp_controls_secondary_inverted">@color/yp_black</color>
+    <color name="yp_text_secondary_inverted">@color/yp_black</color>
     <color name="yp_background_primary">@color/yp_black</color>
     <color name="yp_background_accent">@color/yp_black</color>
+    <color name="yp_background_secondary_accent">@color/yp_white</color>
+    <color name="yp_controls_inverted">@color/yp_white</color>
 </resources>
