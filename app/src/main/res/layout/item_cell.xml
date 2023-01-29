@@ -11,11 +11,10 @@
 
     <TextView
         android:id="@+id/title"
-        style="@style/Typography.Regular.16"
+        style="@style/Primary.Regular.16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@color/black"
         tools:text="lorem"
         android:layout_marginEnd="8dp"/>
 
@@ -25,9 +24,10 @@
         android:layout_height="@dimen/standard_icon_size"
         android:src="@drawable/ic_arrow_right" />
 
-    <androidx.appcompat.widget.SwitchCompat
+    <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switch_control"
+        android:theme="@style/ColorSwitchStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>
