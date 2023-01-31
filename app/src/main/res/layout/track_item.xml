@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/track_image"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="@dimen/track_image_size"
+        android:layout_height="@dimen/track_image_size"
         app:layout_constraintBaseline_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,8 +49,8 @@
 
     <ImageView
         android:id="@+id/track_info_decoration"
-        android:layout_width="3dp"
-        android:layout_height="3dp"
+        android:layout_width="@dimen/track_info_decoration_size"
+        android:layout_height="@dimen/track_info_decoration_size"
         android:layout_marginHorizontal="6dp"
         android:src="@drawable/ic_dot"
         app:layout_constraintBottom_toBottomOf="@id/track_info_artist"
