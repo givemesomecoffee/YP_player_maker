@@ -13,4 +13,7 @@
     <string name="user_agreement_url">https://yandex.ru/legal/practicum_offer/</string>
     <string name="share_app_url">https://practicum.yandex.ru/android-developer/</string>
     <string name="support_email">givemesomecoffee@yandex.ru</string>
+    <string name="refresh">Обновить</string>
+    <string name="search_empty_state_description">Ничего не нашлось</string>
+    <string name="error_no_internet">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
 </resources>
