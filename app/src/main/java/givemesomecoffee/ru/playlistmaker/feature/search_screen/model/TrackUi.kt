@@ -15,7 +15,7 @@ data class TrackUi(
             return TrackUi(
                 trackName = entity.trackName,
                 artistName = entity.artistName,
-                trackTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(entity.trackTime),
+                trackTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(entity.trackTimeMillis),
                 artworkUrl100 = entity.artworkUrl100
             )
         }

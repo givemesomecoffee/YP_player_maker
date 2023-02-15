@@ -3,6 +3,6 @@ package givemesomecoffee.ru.playlistmaker.feature.search_screen.data.remote.mode
 data class Track(
     val trackName: String,
     val artistName: String,
-    val trackTime: Long,
+    val trackTimeMillis: Long,
     val artworkUrl100: String
 )

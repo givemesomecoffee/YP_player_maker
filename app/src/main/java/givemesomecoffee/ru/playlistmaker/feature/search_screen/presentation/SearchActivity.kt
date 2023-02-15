@@ -87,6 +87,7 @@ class SearchActivity : AppCompatActivity() {
             inputMethodManager?.hideSoftInputFromWindow(searchField?.windowToken, 0)
             searchField?.text?.clear()
             searchField?.clearFocus()
+            onStateChanged(SearchScreenUi())
         }
         searchField?.let {
             it.setOnEditorActionListener { _, actionId, _ ->
