@@ -4,12 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.Track
+import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
 
-class TracksAdapter(
-    private val tracks: List<Track>
-) : RecyclerView.Adapter<TrackViewHolder>() {
-
+class TracksAdapter : RecyclerView.Adapter<TrackViewHolder>() {
+    var tracks = listOf<TrackUi>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.track_item, parent, false)
         return TrackViewHolder(view)

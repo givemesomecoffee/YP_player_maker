@@ -12,4 +12,12 @@
         <attr name="cell_title" format="string"/>
         <attr name="cell_icon" format="reference" />
     </declare-styleable>
+    <declare-styleable name="PlaceholderScreen">
+        <attr name="placeholder_screen_type" format="enum">
+            <enum name="placeholder_info" value="0"/>
+            <enum name="placeholder_error" value="1"/>
+        </attr>
+        <attr name="placeholder_description" format="string"/>
+        <attr name="placeholder_icon" format="reference" />
+    </declare-styleable>
 </resources>
