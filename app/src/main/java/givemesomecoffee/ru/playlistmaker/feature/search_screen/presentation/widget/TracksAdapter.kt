@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
 
-class TracksAdapter : RecyclerView.Adapter<TrackViewHolder>() {
+class TracksAdapter(private val listener: ItemClickListener) : RecyclerView.Adapter<TrackViewHolder>() {
     var tracks = listOf<TrackUi>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.track_item, parent, false)
@@ -14,7 +14,7 @@ class TracksAdapter : RecyclerView.Adapter<TrackViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        holder.bind(tracks[position])
+        holder.bind(tracks[position], listener)
     }
 
     override fun getItemCount(): Int {

@@ -6,13 +6,16 @@ import java.util.*
 
 data class TrackUi(
     val trackName: String,
+    val trackId: String,
     val artistName: String,
     val trackTime: String,
-    val artworkUrl100: String
+    val artworkUrl100: String,
+    val isSearchResult: Boolean = true
 ) {
     companion object {
         fun mapFrom(entity: Track): TrackUi {
             return TrackUi(
+                trackId = entity.trackId,
                 trackName = entity.trackName,
                 artistName = entity.artistName,
                 trackTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(entity.trackTimeMillis),

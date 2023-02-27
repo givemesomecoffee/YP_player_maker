@@ -16,4 +16,6 @@
     <string name="refresh">Обновить</string>
     <string name="search_empty_state_description">Ничего не нашлось</string>
     <string name="error_no_internet">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="search_history_title">Вы искали</string>
+    <string name="search_history_clear_title">Очистить историю</string>
 </resources>
