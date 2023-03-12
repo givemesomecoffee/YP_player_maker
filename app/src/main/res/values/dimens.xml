@@ -4,4 +4,5 @@
     <dimen name="standard_icon_size">24dp</dimen>
     <dimen name="track_image_size">45dp</dimen>
     <dimen name="track_info_decoration_size">3dp</dimen>
+    <dimen name="track_description_vertical_offset">8dp</dimen>
 </resources>
