@@ -65,7 +65,7 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
     override fun onTrackClicked(track: TrackUi) {
         if (clickDebounce()) {
             localStorage?.updateSearchHistory(track)
-            goToScreen(Screens.TrackCard(track.trackId))
+            goToScreen(Screens.TrackCard(track.trackId, track.trackSource))
         }
     }
 
