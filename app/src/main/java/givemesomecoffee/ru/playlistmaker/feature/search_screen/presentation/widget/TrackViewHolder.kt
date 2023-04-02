@@ -24,10 +24,9 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         Glide.with(itemView).load(model.artworkUrl100).fitCenter()
             .transform(RoundedCorners(itemView.context.dpToPx(2)))
             .placeholder(R.drawable.ic_placeholder).into(trackImage)
-        if(model.isSearchResult){
-            itemView.setOnClickListener {
-                listener.onTrackClicked(model)
-            }
+        itemView.setOnClickListener {
+            listener.onTrackClicked(model)
         }
+
     }
 }

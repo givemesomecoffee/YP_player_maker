@@ -5,35 +5,29 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.data.Network
+import givemesomecoffee.ru.playlistmaker.data.TracksRepository
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local.SearchHistoryStorage
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local.StorageHolder
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.remote.TracksApi
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.SearchScreenUi
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TracksResponse
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.ItemClickListener
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.TracksAdapter
+import givemesomecoffee.ru.playlistmaker.navigation.Screens
+import givemesomecoffee.ru.playlistmaker.navigation.goToScreen
 import givemesomecoffee.ru.playlistmaker.presentation.utils.dpToPx
 import givemesomecoffee.ru.playlistmaker.presentation.utils.initSecondaryScreen
 import givemesomecoffee.ru.playlistmaker.presentation.view.empty_view.PlaceholderScreen
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SearchActivity : AppCompatActivity(), ItemClickListener {
     private val adapter = TracksAdapter(this)
@@ -45,7 +39,7 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
     private var emptyPlaceholder: PlaceholderScreen? = null
     private var searchProgress: ProgressBar? = null
     private var search: FrameLayout? = null
-    private val tracksApi = Network.retrofit.create(TracksApi::class.java)
+    private val tracksApi = TracksRepository.getInstance()
 
     private var localStorage: SearchHistoryStorage? = null
 
@@ -68,7 +62,9 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
     }
 
     override fun onTrackClicked(track: TrackUi) {
+        Log.d("custom", track.toString())
         localStorage?.updateSearchHistory(track)
+        goToScreen(Screens.TrackCard(track.trackId))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -163,7 +159,7 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
         }
     }
 
-    private fun resetSearchHistoryUi(){
+    private fun resetSearchHistoryUi() {
         findViewById<Group>(R.id.search_history).isVisible = false
         adapter.tracks = emptyList()
         adapter.notifyDataSetChanged()
@@ -188,18 +184,11 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
             onStateChanged(SearchScreenUi())
         } else {
             onStateChanged(SearchScreenUi(loading = true))
-            tracksApi.search(filter).enqueue(object : Callback<TracksResponse> {
-                override fun onResponse(
-                    call: Call<TracksResponse>,
-                    response: Response<TracksResponse>
-                ) {
-                    onStateChanged(SearchScreenUi.mapFrom(response))
-                }
-
-                override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
-                    onStateChanged(SearchScreenUi.mapFrom(t))
-                }
-            })
+            tracksApi.searchTrack(
+                filter,
+                onSuccess = { onStateChanged(SearchScreenUi.mapFrom(it)) },
+                onError = { onStateChanged(SearchScreenUi.mapFrom(it)) }
+            )
         }
     }
 
