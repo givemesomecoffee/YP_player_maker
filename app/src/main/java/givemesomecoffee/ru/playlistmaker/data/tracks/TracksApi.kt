@@ -1,6 +1,6 @@
-package givemesomecoffee.ru.playlistmaker.feature.search_screen.data.remote
+package givemesomecoffee.ru.playlistmaker.data.tracks
 
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TracksResponse
+import givemesomecoffee.ru.playlistmaker.data.tracks.model.TracksResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

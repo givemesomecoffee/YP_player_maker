@@ -1,4 +1,4 @@
-package givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local
+package givemesomecoffee.ru.playlistmaker.data.local
 
 import android.content.Context
 

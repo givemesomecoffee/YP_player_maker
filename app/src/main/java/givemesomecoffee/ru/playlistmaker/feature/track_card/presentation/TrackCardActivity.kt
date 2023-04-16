@@ -1,4 +1,4 @@
-package givemesomecoffee.ru.playlistmaker.feature.track_card
+package givemesomecoffee.ru.playlistmaker.feature.track_card.presentation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.data.TracksRepository
+import givemesomecoffee.ru.playlistmaker.data.tracks.TracksRepository
 import givemesomecoffee.ru.playlistmaker.feature.track_card.model.TrackUi
 import givemesomecoffee.ru.playlistmaker.feature.track_card.utils.PlayerApi
 import givemesomecoffee.ru.playlistmaker.feature.track_card.utils.PlayerContract
 import givemesomecoffee.ru.playlistmaker.feature.track_card.utils.PlayerState
 import givemesomecoffee.ru.playlistmaker.feature.track_card.utils.playerApi
-import givemesomecoffee.ru.playlistmaker.feature.track_card.widget.TrackInfoAdapter
-import givemesomecoffee.ru.playlistmaker.feature.track_card.widget.TrackInfoItemDecoration
+import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoAdapter
+import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoItemDecoration
 import givemesomecoffee.ru.playlistmaker.navigation.Screens
 import givemesomecoffee.ru.playlistmaker.presentation.utils.dpToPx
 import givemesomecoffee.ru.playlistmaker.presentation.utils.initSecondaryScreen
