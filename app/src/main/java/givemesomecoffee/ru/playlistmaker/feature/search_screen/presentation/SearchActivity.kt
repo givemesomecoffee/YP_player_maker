@@ -3,11 +3,11 @@ package givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -42,9 +42,10 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
     private val tracksApi = TracksRepository.getInstance()
 
     private var localStorage: SearchHistoryStorage? = null
-
+    private val handler = Handler(Looper.getMainLooper())
     private var isSearchHistoryShown = false
-
+    private var isClickAllowed = true
+    private val searchRunnable = Runnable { search() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -62,9 +63,10 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
     }
 
     override fun onTrackClicked(track: TrackUi) {
-        Log.d("custom", track.toString())
-        localStorage?.updateSearchHistory(track)
-        goToScreen(Screens.TrackCard(track.trackId))
+        if (clickDebounce()) {
+            localStorage?.updateSearchHistory(track)
+            goToScreen(Screens.TrackCard(track.trackId, track.trackSource))
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -72,6 +74,18 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
         outState.putCharSequence(SEARCH_TEXT_KEY, searchField?.text)
     }
 
+    private fun searchDebounce() {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+    }
+    private fun clickDebounce() : Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+        }
+        return current
+    }
     private fun initView() {
         tracksList = findViewById(R.id.tracks_list)
         emptyPlaceholder = findViewById(R.id.search_empty)
@@ -102,16 +116,6 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
             searchField?.clearFocus()
             onStateChanged(SearchScreenUi())
         }
-        searchField?.let {
-            it.setOnEditorActionListener { _, actionId, _ ->
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    search(it.text?.toString())
-                    searchField?.clearFocus()
-                    true
-                }
-                false
-            }
-        }
         searchField?.apply {
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
@@ -131,6 +135,7 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
                     if (s?.isNotEmpty() == true && isSearchHistoryShown) {
                         showSearchHistory(false)
                     }
+                    searchDebounce()
                 }
 
                 override fun afterTextChanged(s: Editable?) {
@@ -166,20 +171,23 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
     }
 
     private fun configureRecycler() {
-        tracksList?.addItemDecoration(object : ItemDecoration() {
-            override fun getItemOffsets(
-                outRect: Rect,
-                view: View,
-                parent: RecyclerView,
-                state: RecyclerView.State
-            ) {
-                outRect.set(0, this@SearchActivity.dpToPx(8), 0, this@SearchActivity.dpToPx(8))
-            }
-        })
+        if(tracksList?.itemDecorationCount == 0) {
+            tracksList?.addItemDecoration(object : ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
+                    outRect.set(0, this@SearchActivity.dpToPx(8), 0, this@SearchActivity.dpToPx(8))
+                }
+            })
+        }
         tracksList?.adapter = adapter
     }
 
-    private fun search(filter: String?) {
+    private fun search() {
+        val filter = searchField?.text?.toString()
         if (filter.isNullOrEmpty()) {
             onStateChanged(SearchScreenUi())
         } else {
@@ -198,7 +206,7 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
         emptyPlaceholder?.isVisible = state.showEmptyState
         errorPlaceholder?.apply {
             isVisible = state.showError
-            if (state.showError) setRetryCallback { search(searchField?.text?.toString()) }
+            if (state.showError) setRetryCallback { search() }
         }
         adapter.tracks = state.data
         adapter.notifyDataSetChanged()
@@ -207,7 +215,7 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
     companion object {
         private var savedState: SearchScreenUi? = null
         const val SEARCH_TEXT_KEY = "search_text"
-
-    }
+        private const val SEARCH_DEBOUNCE_DELAY = 2000L
+        private const val CLICK_DEBOUNCE_DELAY = 1000L    }
 
 }

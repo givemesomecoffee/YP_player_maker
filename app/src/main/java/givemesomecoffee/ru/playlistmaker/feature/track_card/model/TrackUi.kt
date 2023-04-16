@@ -11,7 +11,8 @@ data class TrackUi(
     val artistName: String,
     val trackTime: String,
     val artworkUrl100: String,
-    val info: List<InfoOption>
+    val info: List<InfoOption>,
+    val trackUrl: String
 ) {
     companion object {
         fun mapFrom(entity: Track, context: Context): TrackUi {
@@ -21,7 +22,8 @@ data class TrackUi(
                 artistName = entity.artistName,
                 trackTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(entity.trackTimeMillis),
                 artworkUrl100 = entity.artworkUrl100,
-                info = InfoOption.mapToList(entity, context)
+                info = InfoOption.mapToList(entity, context),
+                trackUrl = entity.previewUrl
             )
         }
     }

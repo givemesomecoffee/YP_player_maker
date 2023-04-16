@@ -13,9 +13,10 @@ sealed class Screens(
     object Media : Screens(MediaActivity::class.java)
     object Settings : Screens(SettingsActivity::class.java)
 
-    class TrackCard(val id: String) : Screens(TrackCardActivity::class.java) {
+    class TrackCard(val id: String, val trackUrl: String) : Screens(TrackCardActivity::class.java) {
         companion object {
             const val ID_ARG_NAME = "id"
+            const val TRACK_URL = "track_url"
         }
     }
 

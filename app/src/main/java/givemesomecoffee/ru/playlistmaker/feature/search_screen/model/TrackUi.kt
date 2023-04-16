@@ -10,7 +10,8 @@ data class TrackUi(
     val artistName: String,
     val trackTime: String,
     val artworkUrl100: String,
-    val isSearchResult: Boolean = true
+    val isSearchResult: Boolean = true,
+    val trackSource: String
 ) {
     companion object {
         fun mapFrom(entity: Track): TrackUi {
@@ -19,7 +20,8 @@ data class TrackUi(
                 trackName = entity.trackName,
                 artistName = entity.artistName,
                 trackTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(entity.trackTimeMillis),
-                artworkUrl100 = entity.artworkUrl100
+                artworkUrl100 = entity.artworkUrl100,
+                trackSource = entity.previewUrl
             )
         }
     }
