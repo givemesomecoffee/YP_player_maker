@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,23 +17,25 @@ import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.feature.track_card.model.TrackCardScreenState
 import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoAdapter
 import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoItemDecoration
-import givemesomecoffee.ru.playlistmaker.feature.track_card.utils.PlayerApi
-import givemesomecoffee.ru.playlistmaker.feature.track_card.utils.PlayerContract
-import givemesomecoffee.ru.playlistmaker.feature.track_card.utils.PlayerState
-import givemesomecoffee.ru.playlistmaker.feature.track_card.utils.playerApi
 import givemesomecoffee.ru.playlistmaker.core.navigation.Screens
+import givemesomecoffee.ru.playlistmaker.core.presentation.player.PlayerState
+import givemesomecoffee.ru.playlistmaker.core.presentation.player.configure
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.initSecondaryScreen
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.util.*
 
-class TrackCardActivity : AppCompatActivity(), PlayerContract {
+class TrackCardActivity : AppCompatActivity() {
 
     private val viewModel: TrackCardViewModel by lazy {
-        ViewModelProvider(this)[TrackCardViewModel::class.java]
+        ViewModelProvider(
+            this,
+            TrackCardViewModel.getViewModelFactory(application = application)
+        )[TrackCardViewModel::class.java]
     }
     private var id: String? = null
     private var trackUrl: String? = null
-    private val player: PlayerApi by playerApi(this)
 
     private val infoAdapter = TrackInfoAdapter()
 
@@ -44,31 +49,34 @@ class TrackCardActivity : AppCompatActivity(), PlayerContract {
         setContentView(R.layout.activity_track_card)
         initView()
         id?.let { viewModel.sync(it) }
-        viewModel.state.observe(this, ::updateScreen)
+        //viewModel.state.observe(this, ::updateScreen)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collectLatest {
+                    updateScreen(it)
+                }
+            }
+        }
     }
 
-    override fun onProgressChanged(text: String) {
+    private fun onProgressChanged(text: String) {
         trackProgress.text = text
     }
 
-    override fun obtainUrl(): String {
-        return trackUrl ?: intent.getStringExtra(Screens.TrackCard.TRACK_URL).orEmpty()
-    }
-
-    override fun stateChanged(state: PlayerState) {
+    private fun stateChanged(state: PlayerState) {
         when (state) {
             PlayerState.STATE_PAUSED, PlayerState.STATE_PREPARED -> {
                 play.apply {
                     isEnabled = true
                     setImageResource(R.drawable.ic_play)
-                    setOnClickListener { player.startPlayer() }
+                    setOnClickListener { viewModel.startPlayer() }
                 }
             }
             PlayerState.STATE_PLAYING -> {
                 play.apply {
                     isEnabled = true
                     setImageResource(R.drawable.ic_pause)
-                    setOnClickListener { player.pausePlayer() }
+                    setOnClickListener { viewModel.pausePlayer() }
                 }
             }
             else -> {
@@ -79,7 +87,7 @@ class TrackCardActivity : AppCompatActivity(), PlayerContract {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun updateScreen(state: TrackCardScreenState) {
-        state.data?.let {track ->
+        state.data?.let { track ->
             Glide.with(this).load(track.artworkUrl100.replaceAfterLast(URL_DELIMITER, IMAGE_SIZE))
                 .fitCenter()
                 .transform(RoundedCorners(this.dpToPx(8)))
@@ -88,6 +96,8 @@ class TrackCardActivity : AppCompatActivity(), PlayerContract {
             findViewById<TextView>(R.id.track_artist).text = track.artistName
             infoAdapter.info = track.info
             infoAdapter.notifyDataSetChanged()
+            state.playerState?.progress?.let { onProgressChanged(it) }
+            state.playerState?.state?.let { stateChanged(it) }
         }
     }
 
@@ -111,7 +121,11 @@ class TrackCardActivity : AppCompatActivity(), PlayerContract {
 
     private fun obtainArguments() {
         id = intent.getStringExtra(Screens.TrackCard.ID_ARG_NAME)
-        trackUrl = intent.getStringExtra(Screens.TrackCard.TRACK_URL)
+        trackUrl = intent.getStringExtra(Screens.TrackCard.TRACK_URL).also {
+            if (it != null) {
+                configure(viewModel, it)
+            }
+        }
     }
 
     companion object {
