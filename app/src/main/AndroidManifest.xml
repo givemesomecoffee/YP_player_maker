@@ -43,7 +43,7 @@
             android:parentActivityName=".presentation.screen.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".feature.track_card.TrackCardActivity"
+            android:name=".feature.track_card.presentation.TrackCardActivity"
             android:theme="@style/Theme.PlaylistMaker.Light"
             android:parentActivityName=".feature.search_screen.presentation.SearchActivity"
             android:exported="false" />

@@ -1,4 +1,4 @@
-package givemesomecoffee.ru.playlistmaker.feature.search_screen.data.remote.model
+package givemesomecoffee.ru.playlistmaker.data.tracks.model
 
 data class Track(
     val trackName: String,

@@ -16,9 +16,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.data.TracksRepository
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local.SearchHistoryStorage
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local.StorageHolder
+import givemesomecoffee.ru.playlistmaker.data.tracks.TracksRepository
+import givemesomecoffee.ru.playlistmaker.data.local.SearchHistoryStorage
+import givemesomecoffee.ru.playlistmaker.data.local.StorageHolder
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.SearchScreenUi
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.ItemClickListener

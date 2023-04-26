@@ -1,5 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.search_screen.model
 
+import givemesomecoffee.ru.playlistmaker.data.tracks.model.TracksResponse
 import retrofit2.Response
 
 class SearchScreenUi(

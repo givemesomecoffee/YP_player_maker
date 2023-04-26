@@ -2,8 +2,8 @@ package givemesomecoffee.ru.playlistmaker
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local.SettingsStorage
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local.StorageHolder
+import givemesomecoffee.ru.playlistmaker.data.local.SettingsStorage
+import givemesomecoffee.ru.playlistmaker.data.local.StorageHolder
 
 class App : Application() {
     var darkTheme = false

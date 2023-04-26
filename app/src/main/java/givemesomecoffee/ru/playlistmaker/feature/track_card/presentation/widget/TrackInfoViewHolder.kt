@@ -1,4 +1,4 @@
-package givemesomecoffee.ru.playlistmaker.feature.track_card.widget
+package givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget
 
 import android.view.View
 import android.widget.TextView

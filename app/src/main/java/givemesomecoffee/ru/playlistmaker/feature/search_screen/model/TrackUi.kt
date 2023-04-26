@@ -1,6 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.search_screen.model
 
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.remote.model.Track
+import givemesomecoffee.ru.playlistmaker.data.tracks.model.Track
 import java.text.SimpleDateFormat
 import java.util.*
 

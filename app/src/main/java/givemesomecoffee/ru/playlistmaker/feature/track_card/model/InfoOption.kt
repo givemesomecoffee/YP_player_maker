@@ -2,7 +2,7 @@ package givemesomecoffee.ru.playlistmaker.feature.track_card.model
 
 import android.content.Context
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.remote.model.Track
+import givemesomecoffee.ru.playlistmaker.data.tracks.model.Track
 import java.text.SimpleDateFormat
 import java.util.*
 

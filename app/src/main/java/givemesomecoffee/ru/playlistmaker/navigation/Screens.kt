@@ -3,7 +3,7 @@ package givemesomecoffee.ru.playlistmaker.navigation
 import android.app.Activity
 import givemesomecoffee.ru.playlistmaker.presentation.screen.MediaActivity
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.SearchActivity
-import givemesomecoffee.ru.playlistmaker.feature.track_card.TrackCardActivity
+import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.TrackCardActivity
 import givemesomecoffee.ru.playlistmaker.presentation.screen.SettingsActivity
 
 sealed class Screens(

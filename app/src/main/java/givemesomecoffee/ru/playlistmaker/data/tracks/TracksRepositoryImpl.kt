@@ -1,18 +1,17 @@
-package givemesomecoffee.ru.playlistmaker.data
+package givemesomecoffee.ru.playlistmaker.data.tracks
 
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local.LocalTracksStorage
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.remote.TracksApi
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.remote.model.Track
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TracksResponse
+import givemesomecoffee.ru.playlistmaker.data.local.LocalTracksStorage
+import givemesomecoffee.ru.playlistmaker.data.tracks.model.Track
+import givemesomecoffee.ru.playlistmaker.data.tracks.model.TracksResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TracksRepository(
+class TracksRepositoryImpl(
     private val api: TracksApi
-) {
+): TracksRepository {
 
-    fun getTrack(id: String, onSuccess: (Track) -> Unit) {
+    override fun getTrack(id: String, onSuccess: (Track) -> Unit) {
         LocalTracksStorage.tracks?.firstOrNull { it.trackId == id }.let {
             if (it != null) {
                 onSuccess(it)
@@ -40,7 +39,7 @@ class TracksRepository(
         }
     }
 
-    fun searchTrack(
+    override fun searchTrack(
         filter: String,
         onSuccess: (Response<TracksResponse>) -> Unit,
         onError: (Throwable) -> Unit
@@ -57,17 +56,5 @@ class TracksRepository(
                 onError(t)
             }
         })
-    }
-
-    companion object {
-        private var INSTANCE: TracksRepository? = null
-
-        fun getInstance(): TracksRepository {
-            return INSTANCE ?: synchronized(this) {
-                TracksRepository(Network.retrofit.create(TracksApi::class.java)).also {
-                    INSTANCE = it
-                }
-            }
-        }
     }
 }

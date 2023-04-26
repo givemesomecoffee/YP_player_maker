@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.switchmaterial.SwitchMaterial
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local.SettingsStorage
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.data.local.StorageHolder
+import givemesomecoffee.ru.playlistmaker.data.local.SettingsStorage
+import givemesomecoffee.ru.playlistmaker.data.local.StorageHolder
 import givemesomecoffee.ru.playlistmaker.presentation.utils.initSecondaryScreen
 import givemesomecoffee.ru.playlistmaker.presentation.utils.validateEvent
 import givemesomecoffee.ru.playlistmaker.presentation.view.custom_cell.CustomCell
