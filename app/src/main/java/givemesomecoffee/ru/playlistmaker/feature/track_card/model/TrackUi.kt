@@ -1,7 +1,7 @@
 package givemesomecoffee.ru.playlistmaker.feature.track_card.model
 
 import android.content.Context
-import givemesomecoffee.ru.playlistmaker.data.tracks.model.Track
+import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.Track
 import java.text.SimpleDateFormat
 import java.util.*
 

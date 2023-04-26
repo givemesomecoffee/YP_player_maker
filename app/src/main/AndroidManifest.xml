@@ -15,7 +15,7 @@
         android:theme="@style/Theme.PlaylistMaker"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.screen.MainActivity"
+            android:name=".feature.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,19 +28,19 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".presentation.screen.MediaActivity"
+            android:name=".feature.media.MediaActivity"
             android:theme="@style/Theme.PlaylistMaker.Light"
-            android:parentActivityName=".presentation.screen.MainActivity"
+            android:parentActivityName=".feature.main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".feature.search_screen.presentation.SearchActivity"
             android:theme="@style/Theme.PlaylistMaker.Light"
-            android:parentActivityName=".presentation.screen.MainActivity"
+            android:parentActivityName=".feature.main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.screen.SettingsActivity"
+            android:name=".feature.settings.SettingsActivity"
             android:theme="@style/Theme.PlaylistMaker.Light"
-            android:parentActivityName=".presentation.screen.MainActivity"
+            android:parentActivityName=".feature.main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".feature.track_card.presentation.TrackCardActivity"

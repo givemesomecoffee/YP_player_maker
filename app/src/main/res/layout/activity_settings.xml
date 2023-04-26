@@ -6,30 +6,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingVertical="@dimen/screen_vertical_padding"
-    tools:context=".presentation.screen.SettingsActivity">
+    tools:context=".feature.settings.SettingsActivity">
 
-    <givemesomecoffee.ru.playlistmaker.presentation.view.custom_cell.CustomCell
+    <givemesomecoffee.ru.playlistmaker.core.presentation.view.custom_cell.CustomCell
         android:id="@+id/theme_switch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cell_title="@string/settings_title_theme"
         app:cell_type="cell_switch" />
 
-    <givemesomecoffee.ru.playlistmaker.presentation.view.custom_cell.CustomCell
+    <givemesomecoffee.ru.playlistmaker.core.presentation.view.custom_cell.CustomCell
         android:id="@+id/share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cell_icon="@drawable/ic_share"
         app:cell_title="@string/settings_title_share" />
 
-    <givemesomecoffee.ru.playlistmaker.presentation.view.custom_cell.CustomCell
+    <givemesomecoffee.ru.playlistmaker.core.presentation.view.custom_cell.CustomCell
         android:id="@+id/support"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cell_icon="@drawable/ic_support"
         app:cell_title="@string/settings_title_support" />
 
-    <givemesomecoffee.ru.playlistmaker.presentation.view.custom_cell.CustomCell
+    <givemesomecoffee.ru.playlistmaker.core.presentation.view.custom_cell.CustomCell
         android:id="@+id/user_agreement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

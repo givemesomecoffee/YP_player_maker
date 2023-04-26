@@ -60,7 +60,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"   />
 
-    <givemesomecoffee.ru.playlistmaker.presentation.view.empty_view.PlaceholderScreen
+    <givemesomecoffee.ru.playlistmaker.core.presentation.view.empty_view.PlaceholderScreen
         android:id="@+id/search_empty"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -71,7 +71,7 @@
         app:placeholder_icon="@drawable/ic_empty_tracks"
         app:placeholder_screen_type="placeholder_info" />
 
-    <givemesomecoffee.ru.playlistmaker.presentation.view.empty_view.PlaceholderScreen
+    <givemesomecoffee.ru.playlistmaker.core.presentation.view.empty_view.PlaceholderScreen
         android:id="@+id/search_error"
         android:layout_width="match_parent"
         android:layout_height="0dp"

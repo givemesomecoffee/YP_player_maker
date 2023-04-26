@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
-import givemesomecoffee.ru.playlistmaker.presentation.utils.dpToPx
+import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
 
 class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
