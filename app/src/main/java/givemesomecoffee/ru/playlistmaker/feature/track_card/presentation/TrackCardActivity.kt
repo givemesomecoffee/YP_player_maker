@@ -42,6 +42,11 @@ class TrackCardActivity : AppCompatActivity() {
     private lateinit var trackProgress: TextView
     private lateinit var play: ImageView
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initSecondaryScreen("")
