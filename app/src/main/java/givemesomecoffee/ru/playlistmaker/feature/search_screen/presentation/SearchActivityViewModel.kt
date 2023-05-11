@@ -1,19 +1,16 @@
 package givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation
 
-import android.app.Application
 import android.os.Handler
 import android.os.Looper
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.domain.TracksInteractor
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.SearchScreenUi
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
 
-class SearchActivityViewModel(application: Application) :
-    AndroidViewModel(application) {
-
-    private val tracksInteractor = TracksInteractor.create(application)
+class SearchActivityViewModel(private val tracksInteractor: TracksInteractor) :
+    ViewModel() {
 
     private val searchRunnable = Runnable { search() }
     private val handler = Handler(Looper.getMainLooper())

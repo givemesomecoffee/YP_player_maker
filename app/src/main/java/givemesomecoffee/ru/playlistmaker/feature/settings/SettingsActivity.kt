@@ -4,16 +4,16 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.switchmaterial.SwitchMaterial
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.feature.settings.model.SettingsScreenStateUi
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.initSecondaryScreen
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.validateEvent
 import givemesomecoffee.ru.playlistmaker.core.presentation.view.custom_cell.CustomCell
+import givemesomecoffee.ru.playlistmaker.feature.settings.model.SettingsScreenStateUi
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : AppCompatActivity() {
-    private val viewModel: SettingsViewModel by lazy { ViewModelProvider(this)[SettingsViewModel::class.java] }
+    private val viewModel by viewModel<SettingsViewModel>()
     private var share: CustomCell? = null
     private var support: CustomCell? = null
     private var agreement: CustomCell? = null
