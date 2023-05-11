@@ -7,9 +7,9 @@
     android:orientation="vertical"
     android:paddingHorizontal="16dp"
     android:paddingVertical="@dimen/screen_vertical_padding"
-    tools:context=".presentation.screen.MainActivity">
+    tools:context=".feature.main.MainActivity">
 
-    <givemesomecoffee.ru.playlistmaker.presentation.view.main_menu_item.MainMenuItem
+    <givemesomecoffee.ru.playlistmaker.core.presentation.view.main_menu_item.MainMenuItem
         android:id="@+id/menu_search"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,7 +17,7 @@
         app:main_menu_title="@string/title_search"
         app:main_menu_icon="@drawable/ic_search" />
 
-    <givemesomecoffee.ru.playlistmaker.presentation.view.main_menu_item.MainMenuItem
+    <givemesomecoffee.ru.playlistmaker.core.presentation.view.main_menu_item.MainMenuItem
         android:id="@+id/menu_media"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -26,7 +26,7 @@
         android:layout_marginTop="16dp"
         app:main_menu_icon="@drawable/ic_media" />
 
-    <givemesomecoffee.ru.playlistmaker.presentation.view.main_menu_item.MainMenuItem
+    <givemesomecoffee.ru.playlistmaker.core.presentation.view.main_menu_item.MainMenuItem
         android:id="@+id/menu_settings"
         android:layout_width="match_parent"
         android:layout_height="0dp"
