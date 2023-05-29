@@ -14,12 +14,15 @@
     <string name="share_app_url">https://practicum.yandex.ru/android-developer/</string>
     <string name="support_email">givemesomecoffee@yandex.ru</string>
     <string name="refresh">Обновить</string>
+    <string name="create_playlist">Новый плейлист</string>
+    <string name="empty_playlist">Вы не создали ни одного плейлиста</string>
+    <string name="empty_media">Ваша медиатека пуста</string>
     <string name="search_empty_state_description">Ничего не нашлось</string>
     <string name="error_no_internet">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
     <string name="search_history_title">Вы искали</string>
     <string name="search_history_clear_title">Очистить историю</string>
-
-
+    <string name="favourites_title">Избранные треки</string>
+    <string name="playlists_title">Плейлисты</string>
 
     <string name="track_duration">Длительность</string>
     <string name="track_album">Альбом</string>
