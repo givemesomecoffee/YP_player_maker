@@ -5,9 +5,7 @@ import givemesomecoffee.ru.playlistmaker.core.data.tracks.TracksRepository
 import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.Track
 import givemesomecoffee.ru.playlistmaker.core.domain.Response
 
-class TrackInteractor {
-
-    private val tracksApi = TracksRepository.getInstance()
+class TrackInteractor(private val tracksApi: TracksRepository) {
 
     fun getTrack(id: String): Response<Track> {
         LocalTracksStorage.tracks?.firstOrNull { it.trackId == id }

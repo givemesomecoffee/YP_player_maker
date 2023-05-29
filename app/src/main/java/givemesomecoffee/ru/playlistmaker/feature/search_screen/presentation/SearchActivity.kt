@@ -12,22 +12,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.SearchScreenUi
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.ItemClickListener
-import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.TracksAdapter
 import givemesomecoffee.ru.playlistmaker.core.navigation.Screens
 import givemesomecoffee.ru.playlistmaker.core.navigation.goToScreen
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.initSecondaryScreen
 import givemesomecoffee.ru.playlistmaker.core.presentation.view.empty_view.PlaceholderScreen
+import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.SearchScreenUi
+import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
+import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.ItemClickListener
+import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.TracksAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchActivity : AppCompatActivity(), ItemClickListener {
-    private val viewModel: SearchActivityViewModel by lazy { ViewModelProvider(this)[SearchActivityViewModel::class.java] }
+    private val viewModel by viewModel<SearchActivityViewModel>()
 
     private val adapter = TracksAdapter(this)
 

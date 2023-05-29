@@ -3,26 +3,38 @@ package givemesomecoffee.ru.playlistmaker
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import givemesomecoffee.ru.playlistmaker.core.data.local.SettingsStorage
-import givemesomecoffee.ru.playlistmaker.core.data.local.StorageHolder
+import givemesomecoffee.ru.playlistmaker.core.di.CoreComponent
+import givemesomecoffee.ru.playlistmaker.core.di.FeaturesComponent
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.koin.core.context.GlobalContext.startKoin
 
-class App : Application() {
-    var darkTheme = false
+class App : Application(), KoinComponent {
+    private var darkTheme = false
 
-    private var localStorage: SettingsStorage? = null
+    private val localStorage: SettingsStorage by inject()
 
     override fun onCreate() {
         super.onCreate()
-        localStorage = StorageHolder.getSettingsStorage(this)
-        darkTheme = localStorage?.isDarkTheme() == true
+        startKoin {
+            androidContext(this@App)
+            modules(buildList {
+                addAll(CoreComponent.modules)
+                addAll(FeaturesComponent.modules)
+            })
+        }
+        darkTheme = localStorage.isDarkTheme() == true
         switchTheme()
-        localStorage?.addOnSettingsChangedListener() {
+        localStorage.addOnSettingsChangedListener() {
             darkTheme = it
             switchTheme()
         }
+
     }
 
     override fun onTerminate() {
-        localStorage?.removeOnSettingsChangedListener()
+        localStorage.removeOnSettingsChangedListener()
         super.onTerminate()
     }
 

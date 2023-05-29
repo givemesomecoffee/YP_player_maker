@@ -6,7 +6,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,26 +13,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.feature.track_card.model.TrackCardScreenState
-import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoAdapter
-import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoItemDecoration
 import givemesomecoffee.ru.playlistmaker.core.navigation.Screens
 import givemesomecoffee.ru.playlistmaker.core.presentation.player.PlayerState
 import givemesomecoffee.ru.playlistmaker.core.presentation.player.configure
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.initSecondaryScreen
+import givemesomecoffee.ru.playlistmaker.feature.track_card.model.TrackCardScreenState
+import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoAdapter
+import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoItemDecoration
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class TrackCardActivity : AppCompatActivity() {
 
-    private val viewModel: TrackCardViewModel by lazy {
-        ViewModelProvider(
-            this,
-            TrackCardViewModel.getViewModelFactory(application = application)
-        )[TrackCardViewModel::class.java]
-    }
+    private val viewModel by viewModel<TrackCardViewModel>()
     private var id: String? = null
     private var trackUrl: String? = null
 
