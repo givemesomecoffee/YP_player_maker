@@ -26,6 +26,9 @@
     <style name="Primary.Regular.11">
         <item name="android:textSize">11sp</item>
     </style>
+    <style name="Primary.Regular.12">
+        <item name="android:textSize">12sp</item>
+    </style>
     <style name="Primary.Regular.13">
         <item name="android:textSize">13sp</item>
     </style>

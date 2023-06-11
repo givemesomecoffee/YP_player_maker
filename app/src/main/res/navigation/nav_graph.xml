@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/searchFragment">
+
+    <fragment
+        android:id="@+id/mediaFragment"
+        android:name="givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.MediaFragment"
+        android:label="MediaFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.SearchFragment"
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/action_searchFragment_to_trackCardActivity"
+            app:destination="@id/trackCardActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="givemesomecoffee.ru.playlistmaker.feature.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+    <activity
+        android:id="@+id/trackCardActivity"
+        android:name="givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.TrackCardActivity"
+        android:label="TrackCardActivity">
+
+    </activity>
+</navigation>

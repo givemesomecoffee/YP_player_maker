@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingVertical="@dimen/screen_vertical_padding"
-    tools:context=".feature.settings.SettingsActivity">
+    android:paddingVertical="@dimen/screen_vertical_padding">
 
     <givemesomecoffee.ru.playlistmaker.core.presentation.view.custom_cell.CustomCell
         android:id="@+id/theme_switch"
