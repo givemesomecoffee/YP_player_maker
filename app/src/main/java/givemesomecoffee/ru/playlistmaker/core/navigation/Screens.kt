@@ -1,7 +1,7 @@
 package givemesomecoffee.ru.playlistmaker.core.navigation
 
 import android.app.Activity
-import givemesomecoffee.ru.playlistmaker.feature.media.MediaActivity
+import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.MediaActivity
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.SearchActivity
 import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.TrackCardActivity
 import givemesomecoffee.ru.playlistmaker.feature.settings.SettingsActivity

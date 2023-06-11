@@ -28,7 +28,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".feature.media.MediaActivity"
+            android:name=".feature.media.ui.screens.MediaActivity"
             android:theme="@style/Theme.PlaylistMaker.Light"
             android:parentActivityName=".feature.main.MainActivity"
             android:exported="false" />
