@@ -10,7 +10,7 @@ import givemesomecoffee.ru.playlistmaker.core.presentation.utils.initStartScreen
 import givemesomecoffee.ru.playlistmaker.feature.media.MediaScreens
 import givemesomecoffee.ru.playlistmaker.feature.media.ui.widget.MediaViewPagerAdapter
 
-class MediaFragment: Fragment(R.layout.activity_media) {
+class MediaFragment : Fragment(R.layout.fragment_media) {
 
     private lateinit var tabMediator: TabLayoutMediator
     private val tabs = listOf(MediaScreens.Favourites, MediaScreens.Playlist)

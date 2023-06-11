@@ -13,7 +13,7 @@ import givemesomecoffee.ru.playlistmaker.core.presentation.view.custom_cell.Cust
 import givemesomecoffee.ru.playlistmaker.feature.settings.model.SettingsScreenStateUi
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SettingsFragment: Fragment(R.layout.activity_settings) {
+class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private val viewModel by viewModel<SettingsViewModel>()
     private var share: CustomCell? = null
@@ -22,7 +22,8 @@ class SettingsFragment: Fragment(R.layout.activity_settings) {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        view?.findViewById<CustomCell>(R.id.theme_switch)?.findViewById<SwitchMaterial>(R.id.switch_control)
+        view?.findViewById<CustomCell>(R.id.theme_switch)
+            ?.findViewById<SwitchMaterial>(R.id.switch_control)
             ?.apply {
                 viewModel.state.value?.isDarkTheme?.let {
                     this.isChecked = it
@@ -38,10 +39,11 @@ class SettingsFragment: Fragment(R.layout.activity_settings) {
         viewModel.state.observe(viewLifecycleOwner, ::updateView)
     }
 
-    private fun updateView(state: SettingsScreenStateUi){
-        view?.findViewById<CustomCell>(R.id.theme_switch)?.findViewById<SwitchMaterial>(R.id.switch_control)
+    private fun updateView(state: SettingsScreenStateUi) {
+        view?.findViewById<CustomCell>(R.id.theme_switch)
+            ?.findViewById<SwitchMaterial>(R.id.switch_control)
             ?.apply {
-                if(this.isChecked != state.isDarkTheme) this.isChecked = state.isDarkTheme
+                if (this.isChecked != state.isDarkTheme) this.isChecked = state.isDarkTheme
             }
     }
 

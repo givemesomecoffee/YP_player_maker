@@ -29,7 +29,7 @@ import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widg
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.TracksAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchFragment : Fragment(R.layout.activity_search), ItemClickListener {
+class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
     private val viewModel by viewModel<SearchActivityViewModel>()
 
     private val adapter = TracksAdapter(this)
