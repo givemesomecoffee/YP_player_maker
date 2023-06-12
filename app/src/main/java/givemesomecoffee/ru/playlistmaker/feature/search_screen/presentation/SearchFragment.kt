@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.core.navigation.Actions
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
-import givemesomecoffee.ru.playlistmaker.core.presentation.utils.initStartScreen
 import givemesomecoffee.ru.playlistmaker.core.presentation.view.empty_view.PlaceholderScreen
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.SearchScreenUi
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
@@ -47,7 +46,6 @@ class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initStartScreen(getString(R.string.title_search))
         initView()
     }
 

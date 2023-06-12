@@ -7,7 +7,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.switchmaterial.SwitchMaterial
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.core.presentation.utils.initStartScreen
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.validateEvent
 import givemesomecoffee.ru.playlistmaker.core.presentation.view.custom_cell.CustomCell
 import givemesomecoffee.ru.playlistmaker.feature.settings.model.SettingsScreenStateUi
@@ -34,7 +33,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.sync()
-        initStartScreen(getString(R.string.title_settings))
         initView()
         viewModel.state.observe(viewLifecycleOwner, ::updateView)
     }
