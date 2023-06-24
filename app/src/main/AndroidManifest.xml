@@ -12,11 +12,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PlaylistMaker"
+        android:theme="@style/Theme.PlaylistMaker.Light"
         tools:targetApi="31">
         <activity
             android:name=".feature.main.MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,24 +29,8 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".feature.media.ui.screens.MediaActivity"
-            android:theme="@style/Theme.PlaylistMaker.Light"
-            android:parentActivityName=".feature.main.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".feature.search_screen.presentation.SearchActivity"
-            android:theme="@style/Theme.PlaylistMaker.Light"
-            android:parentActivityName=".feature.main.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".feature.settings.SettingsActivity"
-            android:theme="@style/Theme.PlaylistMaker.Light"
-            android:parentActivityName=".feature.main.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".feature.track_card.presentation.TrackCardActivity"
             android:theme="@style/Theme.PlaylistMaker.Light"
-            android:parentActivityName=".feature.search_screen.presentation.SearchActivity"
             android:exported="false" />
     </application>
 

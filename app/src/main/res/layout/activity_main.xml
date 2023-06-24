@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingHorizontal="16dp"
-    android:paddingVertical="@dimen/screen_vertical_padding"
     tools:context=".feature.main.MainActivity">
 
-    <givemesomecoffee.ru.playlistmaker.core.presentation.view.main_menu_item.MainMenuItem
-        android:id="@+id/menu_search"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:main_menu_title="@string/title_search"
-        app:main_menu_icon="@drawable/ic_search" />
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph"
+        tools:layout="@layout/fragment_search" />
 
-    <givemesomecoffee.ru.playlistmaker.core.presentation.view.main_menu_item.MainMenuItem
-        android:id="@+id/menu_media"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:main_menu_title="@string/title_media"
-        android:layout_marginTop="16dp"
-        app:main_menu_icon="@drawable/ic_media" />
+        android:layout_height="wrap_content"
+        android:background="@color/yp_background_primary"
+        app:elevation="0dp"
+        app:itemIconTint="@color/bottom_nav_colors"
+        app:itemTextAppearanceActive="@style/Primary.Regular.12"
+        app:itemTextAppearanceInactive="@style/Primary.Regular.12"
+        app:itemTextColor="@color/bottom_nav_colors"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom_nav" />
 
-    <givemesomecoffee.ru.playlistmaker.core.presentation.view.main_menu_item.MainMenuItem
-        android:id="@+id/menu_settings"
+    <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:main_menu_title="@string/title_settings"
-        android:layout_marginTop="16dp"
-        app:main_menu_icon="@drawable/ic_settings" />
-
-</LinearLayout>
+        android:layout_height="0.5dp"
+        android:background="@color/yp_light_Gray"
+        app:layout_constraintTop_toTopOf="@id/bottom_nav" />
+</androidx.constraintlayout.widget.ConstraintLayout>

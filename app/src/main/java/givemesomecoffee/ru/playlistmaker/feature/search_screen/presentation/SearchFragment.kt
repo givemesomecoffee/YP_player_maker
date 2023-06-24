@@ -7,18 +7,20 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.EditText
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.core.navigation.Screens
-import givemesomecoffee.ru.playlistmaker.core.navigation.goToScreen
+import givemesomecoffee.ru.playlistmaker.core.navigation.Actions
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
-import givemesomecoffee.ru.playlistmaker.core.presentation.utils.initSecondaryScreen
 import givemesomecoffee.ru.playlistmaker.core.presentation.view.empty_view.PlaceholderScreen
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.SearchScreenUi
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
@@ -26,7 +28,7 @@ import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widg
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.TracksAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchActivity : AppCompatActivity(), ItemClickListener {
+class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
     private val viewModel by viewModel<SearchActivityViewModel>()
 
     private val adapter = TracksAdapter(this)
@@ -41,17 +43,17 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
 
     private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search)
-        initSecondaryScreen(getString(R.string.title_search))
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView()
     }
 
     override fun onTrackClicked(track: TrackUi) {
         if (clickDebounce()) {
             viewModel.updateSearchHistory(track)
-            goToScreen(Screens.TrackCard(track.trackId, track.trackSource))
+            val action = Actions.SearchToTrackCard(track.trackId, track.trackSource)
+            findNavController().navigate(action.id, action.bundle)
         }
     }
 
@@ -65,17 +67,19 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
     }
 
     private fun initView() {
-        tracksList = findViewById(R.id.tracks_list)
-        emptyPlaceholder = findViewById(R.id.search_empty)
-        errorPlaceholder = findViewById(R.id.search_error)
-        searchProgress = findViewById(R.id.search_progress)
-        search = findViewById(R.id.search)
-        findViewById<TextView>(R.id.clear_history)?.setOnClickListener {
-            viewModel.clearSearchHistory()
+        view?.apply {
+            tracksList = findViewById(R.id.tracks_list)
+            emptyPlaceholder = findViewById(R.id.search_empty)
+            errorPlaceholder = findViewById(R.id.search_error)
+            searchProgress = findViewById(R.id.search_progress)
+            search = findViewById(R.id.search)
+            findViewById<TextView>(R.id.clear_history)?.setOnClickListener {
+                viewModel.clearSearchHistory()
+            }
+            configureRecycler()
+            configureSearch()
+            viewModel.state.observe(viewLifecycleOwner, ::onStateChanged)
         }
-        configureRecycler()
-        configureSearch()
-        viewModel.state.observe(this, ::onStateChanged)
     }
 
     private fun configureSearch() {
@@ -86,7 +90,7 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
         }
         searchClose?.setOnClickListener {
             val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(searchField?.windowToken, 0)
             searchField?.text?.clear()
             searchField?.clearFocus()
@@ -102,14 +106,11 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
 
     private fun configureRecycler() {
         if (tracksList?.itemDecorationCount == 0) {
-            tracksList?.addItemDecoration(object : ItemDecoration() {
+            tracksList?.addItemDecoration(object : RecyclerView.ItemDecoration() {
                 override fun getItemOffsets(
-                    outRect: Rect,
-                    view: View,
-                    parent: RecyclerView,
-                    state: RecyclerView.State
+                    outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
                 ) {
-                    outRect.set(0, this@SearchActivity.dpToPx(8), 0, this@SearchActivity.dpToPx(8))
+                    outRect.set(0, requireContext().dpToPx(8), 0, requireContext().dpToPx(8))
                 }
             })
         }
@@ -123,7 +124,7 @@ class SearchActivity : AppCompatActivity(), ItemClickListener {
             isVisible = state.showError
             if (state.showError) state.errorCallback?.let { setRetryCallback(it) }
         }
-        findViewById<Group>(R.id.search_history).isVisible = state.showHistory
+        view?.findViewById<Group>(R.id.search_history)?.isVisible = state.showHistory
         adapter.tracks = state.data
         adapter.notifyDataSetChanged()
     }

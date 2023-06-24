@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.core.navigation.Screens
+import givemesomecoffee.ru.playlistmaker.core.navigation.Screens.TrackCard.ID_ARG_NAME
+import givemesomecoffee.ru.playlistmaker.core.navigation.Screens.TrackCard.TRACK_URL
 import givemesomecoffee.ru.playlistmaker.core.presentation.player.PlayerState
 import givemesomecoffee.ru.playlistmaker.core.presentation.player.configure
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
@@ -72,6 +73,7 @@ class TrackCardActivity : AppCompatActivity() {
                     setOnClickListener { viewModel.startPlayer() }
                 }
             }
+
             PlayerState.STATE_PLAYING -> {
                 play.apply {
                     isEnabled = true
@@ -79,6 +81,7 @@ class TrackCardActivity : AppCompatActivity() {
                     setOnClickListener { viewModel.pausePlayer() }
                 }
             }
+
             else -> {
                 play.isEnabled = false
             }
@@ -120,8 +123,8 @@ class TrackCardActivity : AppCompatActivity() {
     }
 
     private fun obtainArguments() {
-        id = intent.getStringExtra(Screens.TrackCard.ID_ARG_NAME)
-        trackUrl = intent.getStringExtra(Screens.TrackCard.TRACK_URL).also {
+        id = intent.getStringExtra(ID_ARG_NAME)
+        trackUrl = intent.getStringExtra(TRACK_URL).also {
             if (it != null) {
                 configure(viewModel, it)
             }
@@ -131,6 +134,5 @@ class TrackCardActivity : AppCompatActivity() {
     companion object {
         const val URL_DELIMITER = "/"
         const val IMAGE_SIZE = "512x512bb.jpg"
-
     }
 }
