@@ -61,19 +61,19 @@ class SearchActivityViewModel(private val tracksInteractor: TracksInteractor) :
         searchJob = viewModelScope.launch {
             delay(SEARCH_DEBOUNCE_DELAY)
             _state.value = SearchScreenUi(loading = true)
-            withContext(Dispatchers.IO){
-                val tracks = tracksInteractor.searchTracks(filter)
-                _state.postValue(
-                    SearchScreenUi(
-                        showError = tracks.error != null,
-                        showEmptyState = tracks.content != null && tracks.content.isEmpty(),
-                        data = tracks.content?.map { TrackUi.mapFrom(it) }.orEmpty()
+            withContext(Dispatchers.IO) {
+                tracksInteractor.searchTracks(filter).collect { result ->
+                    _state.postValue(
+                        SearchScreenUi(
+                            showError = result.error != null,
+                            showEmptyState = result.content != null && result.content.isEmpty(),
+                            data = result.content?.map { TrackUi.mapFrom(it) }.orEmpty()
 
-                    ){
-                        searchInputChanged(filter, null)
-                    })
+                        ) {
+                            searchInputChanged(filter, null)
+                        })
+                }
             }
-
         }
     }
 
