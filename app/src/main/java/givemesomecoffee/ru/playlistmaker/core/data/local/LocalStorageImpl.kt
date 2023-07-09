@@ -4,7 +4,8 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
 
-class LocalStorageImpl(private val storage: SharedPreferences) : SearchHistoryStorage, SettingsStorage {
+class LocalStorageImpl(private val storage: SharedPreferences) : SearchHistoryStorage,
+    SettingsStorage {
 
     private var globalSettingsListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
@@ -19,7 +20,7 @@ class LocalStorageImpl(private val storage: SharedPreferences) : SearchHistorySt
         if (cache.size == 10) {
             cache.removeAt(cache.lastIndex)
         }
-        cache.add(0, track.copy(isSearchResult = false))
+        cache.add(0, track)
         val json = Gson().toJson(cache)
         storage.edit()
             ?.putString(SEARCH_HISTORY_KEY, json)

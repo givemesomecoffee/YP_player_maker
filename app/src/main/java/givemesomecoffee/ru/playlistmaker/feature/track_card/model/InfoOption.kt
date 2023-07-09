@@ -1,42 +1,42 @@
 package givemesomecoffee.ru.playlistmaker.feature.track_card.model
 
-import android.content.Context
+import androidx.annotation.StringRes
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.Track
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 class InfoOption(
-    val name: String,
+    @StringRes val name: Int,
     val value: String
 ) {
     companion object {
-        fun mapToList(track: Track, context: Context): List<InfoOption> {
+        fun mapToList(track: Track): List<InfoOption> {
             return buildList {
                 add(
                     InfoOption(
-                        context.getString(R.string.track_duration),
+                        R.string.track_duration,
                         SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTimeMillis)
                     )
                 )
 
-                if (!track.collectionName.isNullOrEmpty()) {
+                track.collectionName?.let {
                     add(
                         InfoOption(
-                            context.getString(R.string.track_album),
-                            track.collectionName
+                            R.string.track_album,
+                            it
                         )
                     )
                 }
 
                 add(
                     InfoOption(
-                        context.getString(R.string.track_year),
+                        R.string.track_year,
                         track.releaseDate.substring(0, 4)
                     )
                 )
-                add(InfoOption(context.getString(R.string.track_genre), track.primaryGenreName))
-                add(InfoOption(context.getString(R.string.track_country), track.country))
+                add(InfoOption(R.string.track_genre, track.primaryGenreName))
+                add(InfoOption(R.string.track_country, track.country))
             }
         }
     }

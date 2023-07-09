@@ -10,15 +10,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.core.navigation.Screens.TrackCard.ID_ARG_NAME
+import givemesomecoffee.ru.playlistmaker.core.navigation.Screens.TrackCard.IS_FAVOURITE
 import givemesomecoffee.ru.playlistmaker.core.navigation.Screens.TrackCard.TRACK_URL
 import givemesomecoffee.ru.playlistmaker.core.presentation.player.PlayerState
 import givemesomecoffee.ru.playlistmaker.core.presentation.player.configure
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.initSecondaryScreen
+import givemesomecoffee.ru.playlistmaker.databinding.ActivityTrackCardBinding
 import givemesomecoffee.ru.playlistmaker.feature.track_card.model.TrackCardScreenState
 import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoAdapter
 import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.widget.TrackInfoItemDecoration
@@ -30,14 +33,12 @@ import java.util.*
 class TrackCardActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<TrackCardViewModel>()
-    private var id: String? = null
-    private var trackUrl: String? = null
-
     private val infoAdapter = TrackInfoAdapter()
 
     private lateinit var trackProgress: TextView
     private lateinit var play: ImageView
 
+    private val binding: ActivityTrackCardBinding by viewBinding()
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
@@ -49,7 +50,6 @@ class TrackCardActivity : AppCompatActivity() {
         obtainArguments()
         setContentView(R.layout.activity_track_card)
         initView()
-        id?.let { viewModel.sync(it) }
         //viewModel.state.observe(this, ::updateScreen)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -92,8 +92,7 @@ class TrackCardActivity : AppCompatActivity() {
     private fun updateScreen(state: TrackCardScreenState) {
         state.data?.let { track ->
             Glide.with(this).load(track.artworkUrl100.replaceAfterLast(URL_DELIMITER, IMAGE_SIZE))
-                .fitCenter()
-                .transform(RoundedCorners(this.dpToPx(8)))
+                .fitCenter().transform(RoundedCorners(this.dpToPx(8)))
                 .placeholder(R.drawable.ic_placeholder).into(findViewById(R.id.track_image))
             findViewById<TextView>(R.id.track_title).text = track.trackName
             findViewById<TextView>(R.id.track_artist).text = track.artistName
@@ -101,6 +100,10 @@ class TrackCardActivity : AppCompatActivity() {
             infoAdapter.notifyDataSetChanged()
             state.playerState?.progress?.let { onProgressChanged(it) }
             state.playerState?.state?.let { stateChanged(it) }
+            binding.like.setOnClickListener {
+                track.favouriteButtonUi.callback()
+            }
+            binding.likeIcon.setImageResource(track.favouriteButtonUi.icon)
         }
     }
 
@@ -123,12 +126,15 @@ class TrackCardActivity : AppCompatActivity() {
     }
 
     private fun obtainArguments() {
-        id = intent.getStringExtra(ID_ARG_NAME)
-        trackUrl = intent.getStringExtra(TRACK_URL).also {
-            if (it != null) {
-                configure(viewModel, it)
-            }
+        val isFavourite = intent.getBooleanExtra(IS_FAVOURITE, false)
+        intent.getStringExtra(ID_ARG_NAME)?.let {
+            viewModel.sync(it, isFavourite)
         }
+        intent.getStringExtra(TRACK_URL)?.let {
+            configure(viewModel, it)
+        }
+
+
     }
 
     companion object {

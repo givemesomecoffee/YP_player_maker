@@ -52,7 +52,8 @@ class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
     override fun onTrackClicked(track: TrackUi) {
         if (clickDebounce()) {
             viewModel.updateSearchHistory(track)
-            val action = Actions.SearchToTrackCard(track.trackId, track.trackSource)
+            val action =
+                Actions.ToTrackCard(track.trackId, track.trackSource, track.isFavourite)
             findNavController().navigate(action.id, action.bundle)
         }
     }
