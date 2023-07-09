@@ -6,6 +6,8 @@ import givemesomecoffee.ru.playlistmaker.core.data.tracks.TracksRepository
 import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.Track
 import givemesomecoffee.ru.playlistmaker.core.domain.Response
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class TracksInteractor(
     private val localStorage: SearchHistoryStorage,
@@ -24,9 +26,9 @@ class TracksInteractor(
         return localStorage.getSearchHistory().toList()
     }
 
-    fun searchTracks(filter: String): Response<List<Track>> {
+    fun searchTracks(filter: String): Flow<Response<List<Track>>> {
         return tracksApi.searchTrack(filter).also {
-            it.content?.let { LocalTracksStorage.tracks = it }
+            it.map { it.content?.let { LocalTracksStorage.tracks = it } }
         }
     }
 

@@ -3,8 +3,6 @@ package givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -16,6 +14,7 @@ import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import givemesomecoffee.ru.playlistmaker.R
@@ -26,6 +25,8 @@ import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.SearchScree
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.ItemClickListener
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.TracksAdapter
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
@@ -41,7 +42,6 @@ class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
     private var searchProgress: ProgressBar? = null
     private var search: FrameLayout? = null
 
-    private val handler = Handler(Looper.getMainLooper())
     private var isClickAllowed = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,7 +61,10 @@ class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
         val current = isClickAllowed
         if (isClickAllowed) {
             isClickAllowed = false
-            handler.postDelayed({ isClickAllowed = true }, CLICK_DEBOUNCE_DELAY)
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(CLICK_DEBOUNCE_DELAY)
+                isClickAllowed = true
+            }
         }
         return current
     }
