@@ -32,7 +32,7 @@ class InfoOption(
                 add(
                     InfoOption(
                         R.string.track_year,
-                        track.releaseDate.substring(0, 4)
+                        track.releaseDate?.substring(0, 4).orEmpty()
                     )
                 )
                 add(InfoOption(R.string.track_genre, track.primaryGenreName))

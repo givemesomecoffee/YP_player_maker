@@ -30,7 +30,7 @@ data class FavouriteTrack(
                 track.artworkUrl100,
                 track.trackId,
                 track.collectionName,
-                track.releaseDate,
+                track.releaseDate.orEmpty(),
                 track.primaryGenreName,
                 track.country,
                 track.previewUrl,

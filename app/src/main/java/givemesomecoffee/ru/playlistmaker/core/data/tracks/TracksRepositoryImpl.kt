@@ -16,12 +16,15 @@ class TracksRepositoryImpl(
         return api.getTrack(id).execute().body()?.results?.firstOrNull() ?: throw Exception("")
     }
 
+    /**
+     * костыль для кривой десериализации гсона и кривого апи айтюнса(отдает в поиске треки без медиа файлов)
+     */
     override fun searchTrack(filter: String): Flow<Response<List<TrackEntity>>> {
         return flow {
             emit(
                 Response(
                     error = null,
-                    content = api.search(filter).results
+                    content = api.search(filter).results.filter { it.previewUrl != null } // removes corrupted entities
                 )
             )
         }.catch {

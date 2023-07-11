@@ -11,7 +11,7 @@ data class TrackEntity(
     override val artworkUrl100: String,
     override val trackId: String,
     override val collectionName: String?,
-    override val releaseDate: String,
+    override val releaseDate: String?,
     override val primaryGenreName: String,
     override val country: String,
     override val previewUrl: String,

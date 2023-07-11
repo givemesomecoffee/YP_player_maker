@@ -1,5 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,8 +19,6 @@ class SearchActivityViewModel(private val tracksInteractor: TracksInteractor) :
 
     private val _state = MutableLiveData(SearchScreenUi(loading = false))
     val state: LiveData<SearchScreenUi> = _state
-
-    private var filter: String = ""
 
     private var searchJob: Job? = null
 
@@ -54,19 +53,14 @@ class SearchActivityViewModel(private val tracksInteractor: TracksInteractor) :
     }
 
     private fun search(changedText: String) {
-        if (filter == changedText) {
-            return
-        }
-
-        filter = changedText
-
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(SEARCH_DEBOUNCE_DELAY)
             _state.value = SearchScreenUi(loading = true)
             val favourites = tracksInteractor.getFavouriteTracksIds()
             withContext(Dispatchers.IO) {
-                tracksInteractor.searchTracks(filter).collect { result ->
+                tracksInteractor.searchTracks(changedText).collect { result ->
+                    Log.d("custom-test", result.toString())
                     _state.postValue(
                         SearchScreenUi(
                             showError = result.error != null,
@@ -75,7 +69,7 @@ class SearchActivityViewModel(private val tracksInteractor: TracksInteractor) :
                                 .orEmpty()
 
                         ) {
-                            searchInputChanged(filter, null)
+                            searchInputChanged(changedText, null)
                         })
                 }
             }
