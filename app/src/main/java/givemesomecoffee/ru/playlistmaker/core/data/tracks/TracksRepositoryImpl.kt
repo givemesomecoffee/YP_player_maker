@@ -33,6 +33,6 @@ class TracksRepositoryImpl(
     }
 
     override suspend fun getFavouriteTracksId(): List<String> {
-        return favouritesDao.getFavouriteTracks().map { it.trackId }
+        return favouritesDao.getFavouriteTracksId()
     }
 }

@@ -15,8 +15,8 @@ interface FavouritesDao {
     @Query("SELECT * FROM favourite_tracks")
     fun subscribeFavouriteTracks(): Flow<List<FavouriteTrack>>
 
-    @Query("SELECT * FROM favourite_tracks")
-    suspend fun getFavouriteTracks(): List<FavouriteTrack>
+    @Query("SELECT trackId FROM favourite_tracks")
+    suspend fun getFavouriteTracksId(): List<String>
 
     @Query("DELETE FROM favourite_tracks WHERE trackId = :trackId")
     suspend fun deleteTrack(trackId: String)
