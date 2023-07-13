@@ -1,13 +1,21 @@
 package givemesomecoffee.ru.playlistmaker.core.data.di
 
 import android.content.Context
+import androidx.room.Room
+import givemesomecoffee.ru.playlistmaker.core.data.favourites.FavouriteTracksRepository
+import givemesomecoffee.ru.playlistmaker.core.data.favourites.FavouriteTacksRepositoryImpl
+import givemesomecoffee.ru.playlistmaker.core.data.local.db.AppDatabase
+import givemesomecoffee.ru.playlistmaker.core.data.local.db.FavouritesDao
 import givemesomecoffee.ru.playlistmaker.core.data.local.LocalStorageImpl
 import givemesomecoffee.ru.playlistmaker.core.data.local.SearchHistoryStorage
 import givemesomecoffee.ru.playlistmaker.core.data.local.SettingsStorage
 import givemesomecoffee.ru.playlistmaker.core.data.tracks.TracksApi
 import givemesomecoffee.ru.playlistmaker.core.data.tracks.TracksRepository
 import givemesomecoffee.ru.playlistmaker.core.data.tracks.TracksRepositoryImpl
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,15 +35,21 @@ val dataModule = module {
             .getSharedPreferences("practicum_example_preferences", Context.MODE_PRIVATE)
     }
 
-    single<TracksRepository> {
-        TracksRepositoryImpl(get())
+    singleOf(::TracksRepositoryImpl).bind<TracksRepository>()
+    singleOf(::FavouriteTacksRepositoryImpl).bind<FavouriteTracksRepository>()
+    singleOf(::LocalStorageImpl).apply {
+        bind<SearchHistoryStorage>()
+        bind<SettingsStorage>()
     }
 
-    single<SearchHistoryStorage> {
-        LocalStorageImpl(get())
+    single {
+        Room.databaseBuilder(androidApplication(), AppDatabase::class.java, "database.db")
+            .build()
     }
 
-    single<SettingsStorage> {
-        LocalStorageImpl(get())
+    single<FavouritesDao> {
+        val database = get<AppDatabase>()
+        database.getTracksDao()
     }
+
 }

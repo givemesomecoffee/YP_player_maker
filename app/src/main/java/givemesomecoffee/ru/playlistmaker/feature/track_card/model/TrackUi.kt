@@ -1,9 +1,9 @@
 package givemesomecoffee.ru.playlistmaker.feature.track_card.model
 
-import android.content.Context
-import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.Track
+import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.TrackEntity
+import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.FavouriteButtonUi
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 data class TrackUi(
     val trackName: String,
@@ -12,18 +12,23 @@ data class TrackUi(
     val trackTime: String,
     val artworkUrl100: String,
     val info: List<InfoOption>,
-    val trackUrl: String
+    val trackUrl: String,
+    val favouriteButtonUi: FavouriteButtonUi
 ) {
     companion object {
-        fun mapFrom(entity: Track, context: Context): TrackUi {
+        fun mapFrom(entity: TrackEntity, toggleFavouriteCallback: (TrackEntity) -> Unit): TrackUi {
             return TrackUi(
                 trackId = entity.trackId,
                 trackName = entity.trackName,
                 artistName = entity.artistName,
-                trackTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(entity.trackTimeMillis),
+                trackTime = SimpleDateFormat(
+                    "mm:ss",
+                    Locale.getDefault()
+                ).format(entity.trackTimeMillis),
                 artworkUrl100 = entity.artworkUrl100,
-                info = InfoOption.mapToList(entity, context),
-                trackUrl = entity.previewUrl
+                info = InfoOption.mapToList(entity),
+                trackUrl = entity.previewUrl,
+                favouriteButtonUi = FavouriteButtonUi.mapFrom(entity, toggleFavouriteCallback)
             )
         }
     }

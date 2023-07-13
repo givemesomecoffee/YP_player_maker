@@ -1,5 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,8 +20,6 @@ class SearchActivityViewModel(private val tracksInteractor: TracksInteractor) :
     private val _state = MutableLiveData(SearchScreenUi(loading = false))
     val state: LiveData<SearchScreenUi> = _state
 
-    private var filter: String = ""
-
     private var searchJob: Job? = null
 
     fun updateSearchHistory(track: TrackUi) {
@@ -33,44 +32,44 @@ class SearchActivityViewModel(private val tracksInteractor: TracksInteractor) :
     }
 
     fun searchInputChanged(text: String?, historyCanBeShown: Boolean?) {
-        if (text?.isEmpty() == true && historyCanBeShown == true) {
-            val history = tracksInteractor.getSearchHistory().toList()
-            _state.value = _state.value?.copy(
-                showHistory = history.isNotEmpty(),
-                data = history,
-                loading = false
-            )
-        }
-        if (text?.isNotEmpty() == true) {
-            _state.value =
-                _state.value?.copy(showHistory = false, data = emptyList(), loading = false)
-            search(text)
-        } else {
-            searchJob?.cancel()
+        viewModelScope.launch {
+            if (text?.isEmpty() == true && historyCanBeShown == true) {
+                val history = tracksInteractor.getSearchHistory().toList()
+                val favourites = tracksInteractor.getFavouriteTracksIds()
+                _state.value = _state.value?.copy(
+                    showHistory = history.isNotEmpty(),
+                    data = history.map { it.copy(isFavourite = it.trackId in favourites) },
+                    loading = false
+                )
+            }
+            if (text?.isNotEmpty() == true) {
+                _state.value =
+                    _state.value?.copy(showHistory = false, data = emptyList(), loading = false)
+                search(text)
+            } else {
+                searchJob?.cancel()
+            }
         }
     }
 
     private fun search(changedText: String) {
-        if (filter == changedText) {
-            return
-        }
-
-        filter = changedText
-
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(SEARCH_DEBOUNCE_DELAY)
             _state.value = SearchScreenUi(loading = true)
+            val favourites = tracksInteractor.getFavouriteTracksIds()
             withContext(Dispatchers.IO) {
-                tracksInteractor.searchTracks(filter).collect { result ->
+                tracksInteractor.searchTracks(changedText).collect { result ->
+                    Log.d("custom-test", result.toString())
                     _state.postValue(
                         SearchScreenUi(
                             showError = result.error != null,
                             showEmptyState = result.content != null && result.content.isEmpty(),
-                            data = result.content?.map { TrackUi.mapFrom(it) }.orEmpty()
+                            data = result.content?.map { TrackUi.mapFrom(it.copy(isFavourite = it.trackId in favourites)) }
+                                .orEmpty()
 
                         ) {
-                            searchInputChanged(filter, null)
+                            searchInputChanged(changedText, null)
                         })
                 }
             }

@@ -8,10 +8,11 @@ sealed class Actions(
     val bundle: Bundle?
 ) {
 
-    class SearchToTrackCard(private val trackId: String, private val trackUrl: String) : Actions(
-        R.id.action_searchFragment_to_trackCardActivity, Bundle().apply {
+    class ToTrackCard(private val trackId: String, private val trackUrl: String, private val isFavourite: Boolean) : Actions(
+        R.id.action_global_trackCardActivity, Bundle().apply {
             putString(Screens.TrackCard.ID_ARG_NAME, trackId)
             putString(Screens.TrackCard.TRACK_URL, trackUrl)
+            putBoolean(Screens.TrackCard.IS_FAVOURITE, isFavourite)
         }
     )
 }

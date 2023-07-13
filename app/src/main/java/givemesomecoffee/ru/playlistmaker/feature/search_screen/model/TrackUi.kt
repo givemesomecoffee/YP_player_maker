@@ -10,7 +10,7 @@ data class TrackUi(
     val artistName: String,
     val trackTime: String,
     val artworkUrl100: String,
-    val isSearchResult: Boolean = true,
+    val isFavourite: Boolean,
     val trackSource: String
 ) {
     companion object {
@@ -21,7 +21,8 @@ data class TrackUi(
                 artistName = entity.artistName,
                 trackTime = SimpleDateFormat("mm:ss", Locale.getDefault()).format(entity.trackTimeMillis),
                 artworkUrl100 = entity.artworkUrl100,
-                trackSource = entity.previewUrl
+                trackSource = entity.previewUrl,
+                isFavourite = entity.isFavourite
             )
         }
     }
