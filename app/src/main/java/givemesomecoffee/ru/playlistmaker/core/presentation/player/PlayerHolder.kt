@@ -1,12 +1,12 @@
 package givemesomecoffee.ru.playlistmaker.core.presentation.player
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
 import kotlinx.coroutines.flow.StateFlow
 
 interface PlayerHolder {
     val playerState: StateFlow<PlayerStateUi>
     fun release()
     fun pausePlayer()
-    fun preparePlayer(defaultLifecycleObserver: AppCompatActivity, url: String)
+    fun preparePlayer(context: Context, url: String)
     fun startPlayer()
 }

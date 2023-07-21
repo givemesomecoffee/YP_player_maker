@@ -3,6 +3,7 @@ package givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -51,6 +52,7 @@ class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
 
     override fun onTrackClicked(track: TrackUi) {
         if (clickDebounce()) {
+            Log.d("custom", "clicked")
             viewModel.updateSearchHistory(track)
             val action =
                 Actions.ToTrackCard(track.trackId, track.trackSource, track.isFavourite)
@@ -63,8 +65,11 @@ class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
         if (isClickAllowed) {
             isClickAllowed = false
             viewLifecycleOwner.lifecycleScope.launch {
-                delay(CLICK_DEBOUNCE_DELAY)
-                isClickAllowed = true
+              try {
+                    delay(CLICK_DEBOUNCE_DELAY)
+                } finally {
+                  isClickAllowed =   true
+                }
             }
         }
         return current

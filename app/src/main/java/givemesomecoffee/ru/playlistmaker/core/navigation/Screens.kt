@@ -6,4 +6,8 @@ object Screens {
         const val TRACK_URL = "track_url"
         const val IS_FAVOURITE = "is_favourite"
     }
+
+    object AddToPlayList{
+        const val TRACK_ID = "id"
+    }
 }

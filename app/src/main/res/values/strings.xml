@@ -29,4 +29,16 @@
     <string name="track_year">Год</string>
     <string name="track_genre">Жанр</string>
     <string name="track_country">Страна</string>
+    <string name="playlist_created">Плейлист «%s» создан</string>
+    <string name="track_added_to_playlist">Добавлено в плейлист "%s"</string>
+    <string name="track_already_added_to_playlist">Трек уже добавлен в плейлист "%s"</string>
+    <string name="playlist_creation_cancel_title">Завершить создание плейлиста?</string>
+    <string name="playlist_creation_cancel_description">Все несохраненные данные будут потеряны</string>
+    <string name="finish">Завершить</string>
+    <string name="cancel">Отмена</string>
+    <string name="add_to_playlist">Добавить в плейлист</string>
+    <string name="name">Название*</string>
+    <string name="description">Описание</string>
+    <string name="create">Создать</string>
+    <string name="playlist_create_toolbar">Новый плейлист</string>
 </resources>

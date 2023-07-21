@@ -8,7 +8,12 @@ import givemesomecoffee.ru.playlistmaker.core.presentation.player.PlayerHolder
 import givemesomecoffee.ru.playlistmaker.feature.track_card.domain.TrackInteractor
 import givemesomecoffee.ru.playlistmaker.feature.track_card.model.TrackCardScreenState
 import givemesomecoffee.ru.playlistmaker.feature.track_card.model.TrackUi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class TrackCardViewModel(
@@ -17,6 +22,7 @@ class TrackCardViewModel(
     private val repo: FavouriteTracksRepository
 ) : ViewModel(), PlayerHolder by playerHolder {
     private val track1 = MutableStateFlow<TrackEntity?>(null)
+
     val state: StateFlow<TrackCardScreenState> =
         combine(track1.filterNotNull(), playerHolder.playerState) { track, player ->
             TrackCardScreenState(false, TrackUi.mapFrom(track, ::toggleFavouriteTrack), player)

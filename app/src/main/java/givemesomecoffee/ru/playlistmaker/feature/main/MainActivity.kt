@@ -2,15 +2,29 @@ package givemesomecoffee.ru.playlistmaker.feature.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.core.view.iterator
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import by.kirich1409.viewbindingdelegate.viewBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import givemesomecoffee.ru.playlistmaker.R
+import givemesomecoffee.ru.playlistmaker.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+class MainActivity : AppCompatActivity(R.layout.activity_main), NavBarsController {
+
+    private val binding: ActivityMainBinding by viewBinding()
+    override fun onSupportNavigateUp(): Boolean {
+
+        onBackPressed()
+        return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.elevation = 0f
@@ -25,5 +39,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }.toSet()
         setupActionBarWithNavController(navController, AppBarConfiguration(startDestinations))
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            hideBottomNavigation(
+                false
+            )
+        }
+    }
+
+    override fun hideBottomNavigation(hide: Boolean) {
+      binding.bottomNav.isVisible = !hide
     }
 }

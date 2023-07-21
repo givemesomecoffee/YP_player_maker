@@ -5,8 +5,10 @@ import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.TrackCa
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.add_to_playlist.AddToPlaylistViewModel
 
 val trackCardModule = module {
     singleOf(::TrackInteractor)
     viewModelOf(::TrackCardViewModel)
+    viewModelOf(::AddToPlaylistViewModel)
 }
