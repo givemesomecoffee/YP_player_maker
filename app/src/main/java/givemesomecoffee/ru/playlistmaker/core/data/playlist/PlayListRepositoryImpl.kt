@@ -1,6 +1,7 @@
 package givemesomecoffee.ru.playlistmaker.core.data.playlist
 
 import givemesomecoffee.ru.playlistmaker.core.data.local.db.PlaylistsDao
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
 import kotlinx.coroutines.flow.Flow
 
 class PlayListRepositoryImpl(

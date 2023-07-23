@@ -12,6 +12,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/playlist_placeholder"
+        android:layout_width="103dp"
+        android:layout_height="104dp"
+        android:src="@drawable/ic_placeholder"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/playlist_image"
+        app:layout_constraintEnd_toEndOf="@id/playlist_image"
+        app:layout_constraintStart_toStartOf="@id/playlist_image"
+        app:layout_constraintTop_toTopOf="@id/playlist_image" />
+
     <TextView
         android:id="@+id/playlist_name"
         style="@style/Primary.Regular.16"

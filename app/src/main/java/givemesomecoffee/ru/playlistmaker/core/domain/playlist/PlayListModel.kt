@@ -1,4 +1,4 @@
-package givemesomecoffee.ru.playlistmaker.core.data.playlist
+package givemesomecoffee.ru.playlistmaker.core.domain.playlist
 
 data class PlayListModel(
     override val id: Long? = null,

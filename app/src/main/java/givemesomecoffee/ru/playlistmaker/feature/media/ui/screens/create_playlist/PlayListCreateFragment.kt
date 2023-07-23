@@ -14,11 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.core.data.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.showToast
 import givemesomecoffee.ru.playlistmaker.databinding.FragmentCreatePlaylistBinding
@@ -93,7 +94,7 @@ class PlayListCreateFragment : Fragment(R.layout.fragment_create_playlist) {
             state.name.isNotEmpty() || state.description.isNotEmpty() || state.path?.isNotEmpty() == true
         Glide.with(binding.root)
             .load(state.path)
-            .centerCrop().transform(RoundedCorners(requireContext().dpToPx(8)))
+            .transform(CenterCrop(), RoundedCorners(requireContext().dpToPx(8)))
             .placeholder(R.drawable.ic_add_image).into(binding.playlistImage)
         binding.createPlaylist.setOnClickListener {
             val localPath = state.path?.let { it1 -> saveImageToPrivateStorage(it1, state.name) }

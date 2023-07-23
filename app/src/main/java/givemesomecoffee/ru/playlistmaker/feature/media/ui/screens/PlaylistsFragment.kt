@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.core.data.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
 import givemesomecoffee.ru.playlistmaker.core.navigation.Actions
 import givemesomecoffee.ru.playlistmaker.core.presentation.widget.PlaylistItemClickListener
 import givemesomecoffee.ru.playlistmaker.databinding.FragmentPlaylistsBinding

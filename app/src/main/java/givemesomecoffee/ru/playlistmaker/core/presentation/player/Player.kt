@@ -3,7 +3,6 @@ package givemesomecoffee.ru.playlistmaker.core.presentation.player
 import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -36,26 +35,21 @@ class Player : PlayerHolder {
     }
 
     override fun pausePlayer() {
-
-        Log.d("custom", "player paused")
-        Log.d("custom",     mediaPlayer.isPlaying.toString())
         progressJob?.cancel()
         updateState(PlayerState.STATE_PAUSED)
         mediaPlayer.pause()
-
     }
 
     override fun preparePlayer(context: Context, url: String) {
+        mediaPlayer.reset()
         mediaPlayer.setDataSource(context, Uri.parse(url))
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
-            Log.d("custom", "setOnPreparedListener")
             mediaPlayer.seekTo(0)
             updateState(PlayerState.STATE_PREPARED)
             _flow.value = _flow.value.copy(progress = resolveProgress(true))
         }
         mediaPlayer.setOnCompletionListener {
-            Log.d("custom", "setOnCompletionListener")
             progressJob?.cancel()
             updateState(PlayerState.STATE_PREPARED)
             _flow.value = _flow.value.copy(progress = resolveProgress(true))
@@ -69,8 +63,6 @@ class Player : PlayerHolder {
     }
 
     private fun resolveProgress(reset: Boolean): String {
-        Log.d("custom", mediaPlayer.currentPosition.toString())
-        Log.d("custom", mediaPlayer.toString())
         val progress = 0L.takeIf { reset } ?: mediaPlayer.currentPosition
         return SimpleDateFormat("mm:ss", Locale.getDefault()).format(progress)
     }

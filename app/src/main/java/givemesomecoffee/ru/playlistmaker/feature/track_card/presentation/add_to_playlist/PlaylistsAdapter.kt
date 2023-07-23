@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.core.data.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
 import givemesomecoffee.ru.playlistmaker.core.presentation.widget.PlaylistItemClickListener
 
 class PlaylistsAdapter(private val listener: PlaylistItemClickListener) :

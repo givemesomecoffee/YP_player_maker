@@ -2,7 +2,7 @@ package givemesomecoffee.ru.playlistmaker.core.data.local.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import givemesomecoffee.ru.playlistmaker.core.data.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
 
 @Entity(tableName = "playlists")
 data class PlaylistEntity(

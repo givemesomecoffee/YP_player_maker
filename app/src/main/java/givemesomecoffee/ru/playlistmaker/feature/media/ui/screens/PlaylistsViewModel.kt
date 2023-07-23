@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import givemesomecoffee.ru.playlistmaker.core.data.playlist.PlayListRepository
-import givemesomecoffee.ru.playlistmaker.core.data.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.TrackPlayLists
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class PlaylistsViewModel(
-    private val playListRepository: PlayListRepository
+    private val trackPlayLists: TrackPlayLists
 ): ViewModel() {
 
     private val _state = MutableLiveData<List<Playlist>?>(null)
@@ -18,7 +19,7 @@ class PlaylistsViewModel(
 
     init {
         viewModelScope.launch {
-            playListRepository.trackPlaylists().collectLatest {
+            trackPlayLists.invoke().collectLatest {
                 _state.value = it
             }
         }

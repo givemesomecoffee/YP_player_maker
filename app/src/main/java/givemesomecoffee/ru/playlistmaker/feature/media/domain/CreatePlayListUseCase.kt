@@ -1,7 +1,7 @@
-package givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.create_playlist
+package givemesomecoffee.ru.playlistmaker.feature.media.domain
 
 import givemesomecoffee.ru.playlistmaker.core.data.playlist.PlayListRepository
-import givemesomecoffee.ru.playlistmaker.core.data.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
 
 class CreatePlayListUseCase(
     private val playlistsRepositoryImpl: PlayListRepository

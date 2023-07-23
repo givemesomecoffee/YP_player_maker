@@ -1,4 +1,4 @@
-package givemesomecoffee.ru.playlistmaker.core.data.playlist
+package givemesomecoffee.ru.playlistmaker.core.domain.playlist
 
 import givemesomecoffee.ru.playlistmaker.core.data.local.db.PlaylistEntity
 

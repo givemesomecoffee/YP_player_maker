@@ -1,7 +1,7 @@
 package givemesomecoffee.ru.playlistmaker.feature.media.di
 
 import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.FavouriteTracksInteractor
-import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.create_playlist.CreatePlayListUseCase
+import givemesomecoffee.ru.playlistmaker.feature.media.domain.CreatePlayListUseCase
 import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.FavouritesViewModel
 import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.PlaylistsViewModel
 import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.create_playlist.PlayListCreateViewModel

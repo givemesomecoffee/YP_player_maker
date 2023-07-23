@@ -5,7 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import givemesomecoffee.ru.playlistmaker.core.data.playlist.PlayListModel
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.PlayListModel
+import givemesomecoffee.ru.playlistmaker.feature.media.domain.CreatePlayListUseCase
 import kotlinx.coroutines.launch
 
 class PlayListCreateViewModel(

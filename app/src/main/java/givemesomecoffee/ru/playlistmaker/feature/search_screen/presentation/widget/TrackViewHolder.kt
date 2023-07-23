@@ -5,6 +5,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
@@ -21,8 +22,8 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         trackTitle.text = model.trackName
         trackInfoArtist.text = model.artistName
         trackInfoDuration.text = model.trackTime
-        Glide.with(itemView).load(model.artworkUrl100).fitCenter()
-            .transform(RoundedCorners(itemView.context.dpToPx(2)))
+        Glide.with(itemView).load(model.artworkUrl100)
+            .transform(CenterCrop(), RoundedCorners(itemView.context.dpToPx(2)))
             .placeholder(R.drawable.ic_placeholder).into(trackImage)
         itemView.setOnClickListener {
             listener.onTrackClicked(model)

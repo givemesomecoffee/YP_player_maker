@@ -5,12 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import givemesomecoffee.ru.playlistmaker.core.data.playlist.PlayListRepository
-import givemesomecoffee.ru.playlistmaker.core.data.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.TrackPlayLists
+import givemesomecoffee.ru.playlistmaker.feature.track_card.domain.AddTrackToPlaylist
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class AddToPlaylistViewModel(
-    private val playlistsRepository: PlayListRepository
+    private val addTrackToPlaylist: AddTrackToPlaylist,
+    private val trackPlayLists: TrackPlayLists
 ) : ViewModel() {
 
     private lateinit var trackId: String
@@ -30,7 +33,7 @@ class AddToPlaylistViewModel(
             if (trackId in playlist.tracks) {
                 _event.value = AddToPlayListEvents.AlreadyAddedToPlaylist(playlist.name)
             } else {
-                playlistsRepository.addTrack(trackId, playlist)
+                addTrackToPlaylist.invoke(trackId, playlist)
                 _event.value = AddToPlayListEvents.AddedToPlayList(playlist.name)
             }
         }
@@ -43,7 +46,7 @@ class AddToPlaylistViewModel(
 
     init {
         viewModelScope.launch {
-            playlistsRepository.trackPlaylists().collectLatest {
+            trackPlayLists.invoke().collectLatest {
                 _state.value = it
             }
         }

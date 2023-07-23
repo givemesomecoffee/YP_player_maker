@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import givemesomecoffee.ru.playlistmaker.R
-import givemesomecoffee.ru.playlistmaker.core.data.playlist.Playlist
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
 import givemesomecoffee.ru.playlistmaker.core.navigation.Actions
 import givemesomecoffee.ru.playlistmaker.core.navigation.Screens
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.showToast

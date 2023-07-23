@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.core.navigation.Actions
@@ -93,7 +94,7 @@ class TrackCardFragment : Fragment(R.layout.activity_track_card) {
             view?.apply {
                 Glide.with(this)
                     .load(track.artworkUrl100.replaceAfterLast(URL_DELIMITER, IMAGE_SIZE))
-                    .fitCenter().transform(RoundedCorners(requireContext().dpToPx(8)))
+                    .transform(CenterCrop(), RoundedCorners(requireContext().dpToPx(8)))
                     .placeholder(R.drawable.ic_placeholder).into(findViewById(R.id.track_image))
                 findViewById<TextView>(R.id.track_title).text = track.trackName
                 findViewById<TextView>(R.id.track_artist).text = track.artistName

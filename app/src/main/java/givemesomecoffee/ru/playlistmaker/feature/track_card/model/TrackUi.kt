@@ -1,6 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.track_card.model
 
-import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.TrackEntity
+import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.Track
 import givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.FavouriteButtonUi
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -16,7 +16,7 @@ data class TrackUi(
     val favouriteButtonUi: FavouriteButtonUi
 ) {
     companion object {
-        fun mapFrom(entity: TrackEntity, toggleFavouriteCallback: (TrackEntity) -> Unit): TrackUi {
+        fun mapFrom(entity: Track, toggleFavouriteCallback: (Track) -> Unit): TrackUi {
             return TrackUi(
                 trackId = entity.trackId,
                 trackName = entity.trackName,

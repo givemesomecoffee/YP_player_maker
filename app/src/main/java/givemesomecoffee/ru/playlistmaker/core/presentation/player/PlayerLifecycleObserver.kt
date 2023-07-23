@@ -16,10 +16,5 @@ fun <T> Fragment.configure(playerHandler: T, url: String) where T: ViewModel, T:
             playerHandler.pausePlayer()
             super.onPause(owner)
         }
-
-        override fun onDestroy(owner: LifecycleOwner) {
-            playerHandler.release()
-            super.onDestroy(owner)
-        }
     })
 }

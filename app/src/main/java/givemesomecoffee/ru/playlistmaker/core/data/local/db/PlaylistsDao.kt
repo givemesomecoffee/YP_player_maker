@@ -13,9 +13,6 @@ interface PlaylistsDao {
 
     @Query("SELECT * FROM playlists")
     fun subscribePlaylists(): Flow<List<PlaylistEntity>>
-/*
-    @Query("SELECT trackId FROM playlists")
-    suspend fun getFavouriteTracksId(): List<String>*/
 
     @Query("DELETE FROM playlists WHERE id = :id")
     suspend fun deletePlaylist(id: String)

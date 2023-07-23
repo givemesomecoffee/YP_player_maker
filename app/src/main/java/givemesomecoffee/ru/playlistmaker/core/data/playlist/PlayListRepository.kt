@@ -1,5 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.core.data.playlist
 
+import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
 import kotlinx.coroutines.flow.Flow
 
 interface PlayListRepository {
