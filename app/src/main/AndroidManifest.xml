@@ -28,10 +28,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".feature.track_card.presentation.TrackCardActivity"
-            android:theme="@style/Theme.PlaylistMaker.Light"
-            android:exported="false" />
     </application>
 
 </manifest>
