@@ -1,6 +1,5 @@
 package givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import givemesomecoffee.ru.playlistmaker.feature.playlist_card.domain.DeletePlay
 import givemesomecoffee.ru.playlistmaker.feature.playlist_card.domain.DeleteTrackUseCase
 import givemesomecoffee.ru.playlistmaker.feature.playlist_card.domain.GetPlaylistUseCase
 import givemesomecoffee.ru.playlistmaker.feature.playlist_card.domain.GetTracksUseCase
+import givemesomecoffee.ru.playlistmaker.feature.search_screen.domain.TracksInteractor
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -17,7 +17,8 @@ class PlaylistCardViewModel(
     private val getPlaylistUseCase: GetPlaylistUseCase,
     private val getTracksUseCase: GetTracksUseCase,
     private val deleteTrackUseCase: DeleteTrackUseCase,
-    private val deletePlaylistUseCase: DeletePlaylistUseCase
+    private val deletePlaylistUseCase: DeletePlaylistUseCase,
+    private val tracksInteractor: TracksInteractor
 ) : ViewModel() {
 
     private val _state = MutableLiveData<PlaylistUi?>(null)
@@ -28,11 +29,12 @@ class PlaylistCardViewModel(
     fun sync(id: Long) {
         this.id = id
         viewModelScope.launch {
-            Log.d("custom", id.toString())
             getPlaylistUseCase.invoke(id).collectLatest {
-                Log.d("custom", it.toString())
                 val tracks = getTracksUseCase.invoke(it.tracks)
-                _state.value = PlaylistUi.mapFrom(it, tracks)
+                val favourites = tracksInteractor.getFavouriteTracksIds()
+                _state.value = PlaylistUi.mapFrom(
+                    it,
+                    tracks.map { it.toDomain().copy(isFavourite = it.trackId in favourites) })
             }
         }
     }
@@ -43,7 +45,7 @@ class PlaylistCardViewModel(
         }
     }
 
-    fun deletePlaylist(playlist: Playlist){
+    fun deletePlaylist(playlist: Playlist) {
         viewModelScope.launch {
             deletePlaylistUseCase.invoke(playlist)
         }
