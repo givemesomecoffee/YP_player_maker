@@ -1,5 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui
 
+import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -42,6 +43,7 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configureMenu()
         binding.tlbPlaylistCard.setNavigationIcon(R.drawable.ic_up_button)
         binding.tlbPlaylistCard.setNavigationOnClickListener { findNavController().popBackStack() }
         setFullScreen(true)
@@ -55,19 +57,17 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
                 }
             })
         }
-/*        BottomSheetBehavior.from(binding.container).apply {
-            isFitToContents = false
-            halfExpandedRatio = 0.3f
-            state = BottomSheetBehavior.STATE_HALF_EXPANDED
-        }*/
-   binding.ivShare.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+        binding.ivShare.viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 binding.ivShare.viewTreeObserver.removeGlobalOnLayoutListener(this)
                 val locations = IntArray(2)
                 binding.ivShare.getLocationOnScreen(locations)
                 val x = locations[0]
                 val y = locations[1]
-                val height = resources.displayMetrics.heightPixels - (binding.ivShare.measuredHeight + y) - binding.root.context.dpToPx(24)
+                val height =
+                    resources.displayMetrics.heightPixels - (binding.ivShare.measuredHeight + y) - binding.root.context.dpToPx(
+                        24
+                    )
                 BottomSheetBehavior.from(binding.container).peekHeight = height
             }
         })
@@ -80,7 +80,7 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
         binding.ivShare.getLocationInWindow(temp)
         Log.d("custom", temp[1].toString())
         Log.d("custom", temp[0].toString())
-        Log.d("custom",binding.ivShare.marginTop.toString())
+        Log.d("custom", binding.ivShare.marginTop.toString())
     }
 
     private fun updateView(playlist: PlaylistUi?) {
@@ -102,6 +102,12 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
                 tvPlaylistName.text = it.name
                 tvPlaylistDescription.text = it.description
             }
+            binding.ivShare.setOnClickListener {
+                sharePlaylist(playlist.shareText)
+            }
+            binding.ivMenu.setOnClickListener {
+                BottomSheetBehavior.from(binding.menu).state = BottomSheetBehavior.STATE_HALF_EXPANDED
+            }
         }
     }
 
@@ -113,6 +119,35 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
             else -> "минут"
         }
         return "$minutes $postfix"
+    }
+
+    private fun configureMenu() {
+        binding.menu.let { menu ->
+            BottomSheetBehavior.from(menu).apply {
+                state = BottomSheetBehavior.STATE_HIDDEN
+                addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                    override fun onStateChanged(bottomSheet: View, newState: Int) {
+                        binding.overlay.isVisible = newState != BottomSheetBehavior.STATE_HIDDEN
+                    }
+
+                    override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                        // TODO("Not yet implemented")
+                    }
+
+                })
+            }
+        }
+    }
+
+    private fun sharePlaylist(text: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     companion object {
