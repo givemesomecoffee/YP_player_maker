@@ -3,7 +3,6 @@ package givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.core.view.isVisible
@@ -78,7 +77,6 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
     }
 
     private fun updateView(playlist: PlaylistUi?) {
-        Log.d("custom-pa", playlist.toString())
         playlist?.let {
             updateMenuState(it)
             adapter.tracks = it.tracksList.map { TrackUi.mapFrom(it) }

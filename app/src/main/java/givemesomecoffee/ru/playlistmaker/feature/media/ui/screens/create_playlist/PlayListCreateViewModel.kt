@@ -1,7 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.create_playlist
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,7 +29,6 @@ class PlayListCreateViewModel(
         if(args is Screens.EditPlayListArgs.Edit){
             viewModelScope.launch {
                 getPlaylistUseCase.invoke(id = args.id).let {
-                    Log.d("custom", it.toString())
                    _state.value =  PlayListModel(
                         name = it.name,
                         id = it.id,

@@ -2,10 +2,8 @@ package givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.create_playli
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.PickVisualMediaRequest
@@ -21,7 +19,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
-import givemesomecoffee.ru.playlistmaker.BuildConfig
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
 import givemesomecoffee.ru.playlistmaker.core.navigation.Screens
@@ -124,7 +121,6 @@ class PlayListCreateFragment : Fragment(R.layout.fragment_create_playlist) {
 
     private fun saveImageToPrivateStorage(path: String, name: String): String {
         if (path.contains("givemesomecoffee.ru.playlistmaker")) return path
-        Log.d("custom-new", path)
         val filePath =
             File(requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "myalbum")
         if (!filePath.exists()) {
