@@ -33,5 +33,8 @@ class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .placeholder(R.drawable.ic_placeholder)
                 .into(image)
         }
+        itemView.setOnClickListener {
+            listener.onItemClicked(model)
+        }
     }
 }

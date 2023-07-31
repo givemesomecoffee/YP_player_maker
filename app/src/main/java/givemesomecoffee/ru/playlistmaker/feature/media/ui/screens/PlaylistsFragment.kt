@@ -43,7 +43,8 @@ class PlaylistsFragment : Fragment(R.layout.fragment_playlists), PlaylistItemCli
     }
 
     override fun onItemClicked(playlist: Playlist) {
-        //TODO("Not yet implemented")
+        val action = Actions.ToPlayListCard(playlist.id.toString())
+        findNavController().navigate(action.id, action.bundle)
     }
 
     private fun updateState(state: List<Playlist>?) {

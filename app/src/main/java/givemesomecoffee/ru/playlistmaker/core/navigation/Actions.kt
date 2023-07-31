@@ -25,4 +25,10 @@ sealed class Actions(
                 putString(Screens.AddToPlayList.TRACK_ID, trackId)
         }
     )
+
+    class ToPlayListCard(id:String): Actions(
+        R.id.action_global_playlistCardFragment, Bundle().apply {
+            putString(Screens.PlaylistCard.PLAYLIST_ID, id)
+        }
+    )
 }

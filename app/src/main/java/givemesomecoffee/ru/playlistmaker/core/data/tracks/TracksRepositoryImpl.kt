@@ -2,6 +2,7 @@ package givemesomecoffee.ru.playlistmaker.core.data.tracks
 
 import givemesomecoffee.ru.playlistmaker.core.data.local.db.FavouritesDao
 import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.TrackEntity
+import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.TracksResponse
 import givemesomecoffee.ru.playlistmaker.core.domain.Response
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -34,5 +35,9 @@ class TracksRepositoryImpl(
 
     override suspend fun getFavouriteTracksId(): List<String> {
         return favouritesDao.getFavouriteTracksId()
+    }
+
+    override suspend fun getTracks(ids: List<String>): TracksResponse {
+        return api.getTracks(ids.joinToString(separator = ","))
     }
 }

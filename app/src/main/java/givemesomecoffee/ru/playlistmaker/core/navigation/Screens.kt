@@ -10,4 +10,8 @@ object Screens {
     object AddToPlayList{
         const val TRACK_ID = "id"
     }
+
+    object PlaylistCard{
+        const val PLAYLIST_ID = "playlist_id"
+    }
 }

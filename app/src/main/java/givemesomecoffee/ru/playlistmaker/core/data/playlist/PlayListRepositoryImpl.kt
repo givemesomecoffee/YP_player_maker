@@ -23,4 +23,6 @@ class PlayListRepositoryImpl(
         }
         playlistsDao.insertPlaylist(playlist.toLocal().copy(tracks = tracks, size = tracks.size))
     }
+
+    override suspend fun getPlaylist(id: String): Playlist = playlistsDao.getPlaylist(id)
 }
