@@ -113,7 +113,18 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
                 .placeholder(R.drawable.ic_placeholder).into(ivPlaylistMenu)
             tvPlaylistNameMenu.text = playlist.name
             tvPlaylistDescription.text = playlist.description
-            tvDeleteMenu
+            tvDeleteMenu.setOnClickListener {
+                MaterialAlertDialogBuilder(
+                    requireContext(),
+                    R.style.AppBottomSheetDialogTheme
+                )
+                    .setTitle(R.string.delete_playlist)
+                    .setNegativeButton(R.string.no) { dialog, _ ->
+                        dialog.dismiss()
+                    }.setPositiveButton(R.string.yes) { _, _ ->
+                        viewModel.deletePlaylist(playlist)
+                    }.show()
+            }
             tvEditMenu
         }
     }
@@ -172,7 +183,7 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
             R.style.AppBottomSheetDialogTheme
         )
             .setTitle(R.string.delete_track)
-            .setNeutralButton(R.string.no) { dialog, _ ->
+            .setNegativeButton(R.string.no) { dialog, _ ->
                 dialog.dismiss()
             }.setPositiveButton(R.string.yes) { _, _ ->
                 viewModel.deleteTrack(track.trackId, id)

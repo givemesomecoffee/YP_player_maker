@@ -1,5 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.playlist_card.di
 
+import givemesomecoffee.ru.playlistmaker.feature.playlist_card.domain.DeletePlaylistUseCase
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 import givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui.PlaylistCardViewModel
@@ -12,5 +13,6 @@ val playlistCardModule = module {
     singleOf(::GetPlaylistUseCase)
     singleOf(::GetTracksUseCase)
     singleOf(::DeleteTrackUseCase)
+    singleOf(::DeletePlaylistUseCase)
     viewModelOf(::PlaylistCardViewModel)
 }

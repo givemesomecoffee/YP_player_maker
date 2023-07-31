@@ -44,11 +44,25 @@ class PlayListRepositoryImpl(
             val tracks = prev.tracks.toMutableList()
             tracks.remove(trackId)
             playlistsDao.insertPlaylist(prev.copy(tracks = tracks, size = tracks.size))
-            playlistsDao.getPlaylists().mapNotNull { it.tracks.firstOrNull { it == trackId } }
-                .takeIf {
-                    it.isNotEmpty()
-                }?.let { playlistsDao.deleteTrack(trackId) }
+            cleanUpTrack(trackId)
         }
+    }
+
+    override suspend fun deletePlaylist(playlist: Playlist) {
+        withContext(Dispatchers.IO){
+            playlistsDao.deletePlaylist(playlist.id!!)
+            playlist.tracks.forEach{
+                cleanUpTrack(trackId = it)
+            }
+
+        }
+    }
+
+    private suspend fun cleanUpTrack(trackId: String){
+        playlistsDao.getPlaylists().mapNotNull { it.tracks.firstOrNull { it == trackId } }
+            .takeIf {
+                it.isNotEmpty()
+            }?.let { playlistsDao.deleteTrack(trackId) }
     }
 
 }
