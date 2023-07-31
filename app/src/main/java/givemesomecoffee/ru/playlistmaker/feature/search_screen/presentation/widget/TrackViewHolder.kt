@@ -28,6 +28,10 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         itemView.setOnClickListener {
             listener.onTrackClicked(model)
         }
+        itemView.setOnLongClickListener {
+            listener.onLongClick(model)
+            true
+        }
 
     }
 }

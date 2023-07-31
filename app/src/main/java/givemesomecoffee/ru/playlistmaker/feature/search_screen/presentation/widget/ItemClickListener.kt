@@ -5,5 +5,5 @@ import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
 interface ItemClickListener {
     fun onTrackClicked(track: TrackUi)
 
-    fun onLongClick(track: TrackUi) = {}
+    fun onLongClick(track: TrackUi)  {}
 }

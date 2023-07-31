@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.core.navigation.Actions
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
@@ -31,10 +32,12 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
     private val viewModel by viewModel<PlaylistCardViewModel>()
     private val binding: FragmentPlaylistCardBinding by viewBinding()
     private val adapter = TracksAdapter(this)
+    private lateinit var id: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.getString(PLAYLIST_ID)?.let {
+            id = it
             viewModel.sync(it)
         }
     }
@@ -163,7 +166,17 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
         findNavController().navigate(action.id, action.bundle)
     }
 
-    override fun onLongClick(track: TrackUi): () -> Unit {
-        return super.onLongClick(track)
+    override fun onLongClick(track: TrackUi) {
+        MaterialAlertDialogBuilder(
+            requireContext(),
+            R.style.AppBottomSheetDialogTheme
+        )
+            .setTitle(R.string.delete_track)
+            .setNeutralButton(R.string.no) { dialog, _ ->
+                dialog.dismiss()
+            }.setPositiveButton(R.string.yes) { _, _ ->
+                viewModel.deleteTrack(track.trackId, id)
+            }.show()
+
     }
 }

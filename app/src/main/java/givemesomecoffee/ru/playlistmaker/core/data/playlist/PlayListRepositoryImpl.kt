@@ -31,10 +31,23 @@ class PlayListRepositoryImpl(
         playlistsDao.insertPlaylistTrack(PlaylistTrackEntity.mapFrom(tracksApi.getTracks(trackId).results.first()))
     }
 
-    override suspend fun getPlaylist(id: String): Playlist = playlistsDao.getPlaylist(id)
+    override fun trackPlaylist(playlistId: String) = playlistsDao.trackPlaylist(playlistId)
     override suspend fun getPlaylistTracks(ids: List<String>): List<Track> {
         return withContext(Dispatchers.IO){
             playlistsDao.getPlaylistTracks(ids)
+        }
+    }
+
+    override suspend fun deleteTrack(trackId: String, playlistId: String) {
+        withContext(Dispatchers.IO) {
+            val prev = playlistsDao.getPlaylist(playlistId)
+            val tracks = prev.tracks.toMutableList()
+            tracks.remove(trackId)
+            playlistsDao.insertPlaylist(prev.copy(tracks = tracks, size = tracks.size))
+            playlistsDao.getPlaylists().mapNotNull { it.tracks.firstOrNull { it == trackId } }
+                .takeIf {
+                    it.isNotEmpty()
+                }?.let { playlistsDao.deleteTrack(trackId) }
         }
     }
 

@@ -5,24 +5,36 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import givemesomecoffee.ru.playlistmaker.feature.playlist_card.domain.DeleteTrackUseCase
 import givemesomecoffee.ru.playlistmaker.feature.playlist_card.domain.GetPlaylistUseCase
 import givemesomecoffee.ru.playlistmaker.feature.playlist_card.domain.GetTracksUseCase
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class PlaylistCardViewModel(
     private val getPlaylistUseCase: GetPlaylistUseCase,
-    private val getTracksUseCase: GetTracksUseCase
-): ViewModel() {
+    private val getTracksUseCase: GetTracksUseCase,
+    private val deleteTrackUseCase: DeleteTrackUseCase
+) : ViewModel() {
 
     private val _state = MutableLiveData<PlaylistUi?>(null)
     val state: LiveData<PlaylistUi?> = _state
 
-    fun sync(id: String){
-        viewModelScope.launch{
-            val playlist = getPlaylistUseCase.invoke(id)
-            val tracks = getTracksUseCase.invoke(playlist.tracks)
-            Log.d("custom", tracks.toString())
-           _state.value = PlaylistUi.mapFrom(playlist, tracks)
+    private var id: String? = null
+
+    fun sync(id: String) {
+        this.id = id
+        viewModelScope.launch {
+            getPlaylistUseCase.invoke(id).collectLatest {
+                val tracks = getTracksUseCase.invoke(it.tracks)
+                _state.value = PlaylistUi.mapFrom(it, tracks)
+            }
+        }
+    }
+
+    fun deleteTrack(trackId: String, id: String) {
+        viewModelScope.launch {
+            deleteTrackUseCase.invoke(trackId, id)
         }
     }
 }
