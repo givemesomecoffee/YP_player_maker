@@ -3,17 +3,16 @@ package givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.core.view.isVisible
-import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.core.navigation.Actions
@@ -38,7 +37,6 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
         arguments?.getString(PLAYLIST_ID)?.let {
             viewModel.sync(it)
         }
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,17 +72,9 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
         viewModel.state.observe(viewLifecycleOwner, ::updateView)
     }
 
-    override fun onStart() {
-        super.onStart()
-        val temp = IntArray(2)
-        binding.ivShare.getLocationInWindow(temp)
-        Log.d("custom", temp[1].toString())
-        Log.d("custom", temp[0].toString())
-        Log.d("custom", binding.ivShare.marginTop.toString())
-    }
-
     private fun updateView(playlist: PlaylistUi?) {
         playlist?.let {
+            updateMenuState(it)
             adapter.tracks = it.tracksList.map { TrackUi.mapFrom(it) }
             adapter.notifyDataSetChanged()
             val hasImage = !it.path.isNullOrEmpty()
@@ -108,6 +98,20 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
             binding.ivMenu.setOnClickListener {
                 BottomSheetBehavior.from(binding.menu).state = BottomSheetBehavior.STATE_HALF_EXPANDED
             }
+        }
+    }
+
+    private fun updateMenuState(playlist: PlaylistUi){
+        binding.run {
+            tvShareMenu.setOnClickListener { sharePlaylist(playlist.shareText) }
+            Glide.with(root)
+                .load(playlist.path)
+                .transform(CenterCrop(), RoundedCorners(requireContext().dpToPx(8)))
+                .placeholder(R.drawable.ic_placeholder).into(ivPlaylistMenu)
+            tvPlaylistNameMenu.text = playlist.name
+            tvPlaylistDescription.text = playlist.description
+            tvDeleteMenu
+            tvEditMenu
         }
     }
 
@@ -157,5 +161,9 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
     override fun onTrackClicked(track: TrackUi) {
         val action = Actions.ToTrackCard(track.trackId, track.trackSource, track.isFavourite)
         findNavController().navigate(action.id, action.bundle)
+    }
+
+    override fun onLongClick(track: TrackUi): () -> Unit {
+        return super.onLongClick(track)
     }
 }
