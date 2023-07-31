@@ -1,7 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -14,9 +13,9 @@ import givemesomecoffee.ru.playlistmaker.databinding.FragmentPlaylistCardBinding
 import givemesomecoffee.ru.playlistmaker.feature.main.NavBarsController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class PlaylistCardFragment: Fragment(R.layout.fragment_playlist_card) {
+class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card) {
 
-    private val viewModel  by viewModel<PlaylistCardViewModel>()
+    private val viewModel by viewModel<PlaylistCardViewModel>()
     private val binding: FragmentPlaylistCardBinding by viewBinding()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +34,7 @@ class PlaylistCardFragment: Fragment(R.layout.fragment_playlist_card) {
     private fun updateView(playlist: PlaylistUi?) {
         playlist?.let {
             val hasImage = !it.path.isNullOrEmpty()
-            if(hasImage) {
+            if (hasImage) {
                 Glide.with(binding.root)
                     .load(it.path)
                     .transform(CenterCrop())
@@ -53,17 +52,16 @@ class PlaylistCardFragment: Fragment(R.layout.fragment_playlist_card) {
     }
 
     private fun resolvePlaylistDuration(millis: Long): String {
-        Log.d("custom-dur", millis.toString())
-        val minutes = (millis/1000/60).toInt()
-       val postfix = when(minutes%10){
+        val minutes = (millis / 1000 / 60).toInt()
+        val postfix = when (minutes % 10) {
             1 -> "минута"
-            2,3,4 -> "минуты"
+            2, 3, 4 -> "минуты"
             else -> "минут"
         }
         return "$minutes $postfix"
     }
 
-    companion object{
+    companion object {
         const val PLAYLIST_ID = "playlist_id"
     }
 
