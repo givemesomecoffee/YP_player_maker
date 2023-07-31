@@ -43,7 +43,7 @@ class PlaylistsFragment : Fragment(R.layout.fragment_playlists), PlaylistItemCli
     }
 
     override fun onItemClicked(playlist: Playlist) {
-        val action = Actions.ToPlayListCard(playlist.id.toString())
+        val action = Actions.ToPlayListCard(playlist.id!!)
         findNavController().navigate(action.id, action.bundle)
     }
 

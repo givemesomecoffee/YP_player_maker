@@ -17,7 +17,15 @@ sealed class Actions(
     )
 
     object ToCreatePlaylist: Actions(
-        R.id.action_global_playListCreateFragment, Bundle()
+        R.id.action_global_playListCreateFragment, Bundle().apply {
+            putParcelable(Screens.EditPlayListArgs.TYPE, Screens.EditPlayListArgs.Create)
+        }
+    )
+
+    data class ToEditPlaylist(val playlistId: Long): Actions(
+        R.id.action_global_playListCreateFragment, Bundle().apply {
+            putParcelable(Screens.EditPlayListArgs.TYPE, Screens.EditPlayListArgs.Edit(playlistId))
+        }
     )
 
     class AddToPlayList(trackId: String): Actions(
@@ -26,9 +34,9 @@ sealed class Actions(
         }
     )
 
-    class ToPlayListCard(id:String): Actions(
+    class ToPlayListCard(id:Long): Actions(
         R.id.action_global_playlistCardFragment, Bundle().apply {
-            putString(Screens.PlaylistCard.PLAYLIST_ID, id)
+            putLong(Screens.PlaylistCard.PLAYLIST_ID, id)
         }
     )
 }

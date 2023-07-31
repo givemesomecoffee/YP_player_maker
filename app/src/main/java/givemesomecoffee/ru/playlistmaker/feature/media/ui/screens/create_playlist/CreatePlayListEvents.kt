@@ -4,4 +4,5 @@ sealed class CreatePlayListEvents {
 
     class Created(val name: String): CreatePlayListEvents()
 
+    object Edited: CreatePlayListEvents()
 }

@@ -1,5 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,19 +23,21 @@ class PlaylistCardViewModel(
     private val _state = MutableLiveData<PlaylistUi?>(null)
     val state: LiveData<PlaylistUi?> = _state
 
-    private var id: String? = null
+    private var id: Long? = null
 
-    fun sync(id: String) {
+    fun sync(id: Long) {
         this.id = id
         viewModelScope.launch {
+            Log.d("custom", id.toString())
             getPlaylistUseCase.invoke(id).collectLatest {
+                Log.d("custom", it.toString())
                 val tracks = getTracksUseCase.invoke(it.tracks)
                 _state.value = PlaylistUi.mapFrom(it, tracks)
             }
         }
     }
 
-    fun deleteTrack(trackId: String, id: String) {
+    fun deleteTrack(trackId: String, id: Long) {
         viewModelScope.launch {
             deleteTrackUseCase.invoke(trackId, id)
         }

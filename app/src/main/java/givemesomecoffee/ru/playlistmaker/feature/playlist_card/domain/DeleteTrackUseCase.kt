@@ -6,7 +6,7 @@ class DeleteTrackUseCase(
     private val playListRepository: PlayListRepository
 ) {
 
-    suspend fun invoke(trackId: String, playlistId: String){
+    suspend fun invoke(trackId: String, playlistId: Long){
         playListRepository.deleteTrack(trackId, playlistId)
     }
 }

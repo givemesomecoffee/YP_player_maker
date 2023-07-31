@@ -3,6 +3,7 @@ package givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui
 import android.content.Intent
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.core.view.isVisible
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -25,6 +27,7 @@ import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.ItemClickListener
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.widget.TracksAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.properties.Delegates
 
 
 class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClickListener {
@@ -32,11 +35,11 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
     private val viewModel by viewModel<PlaylistCardViewModel>()
     private val binding: FragmentPlaylistCardBinding by viewBinding()
     private val adapter = TracksAdapter(this)
-    private lateinit var id: String
+    private var id by Delegates.notNull<Long>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.getString(PLAYLIST_ID)?.let {
+        arguments?.getLong(PLAYLIST_ID)?.let {
             id = it
             viewModel.sync(it)
         }
@@ -63,7 +66,6 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
                 binding.ivShare.viewTreeObserver.removeGlobalOnLayoutListener(this)
                 val locations = IntArray(2)
                 binding.ivShare.getLocationInWindow(locations)
-                val x = locations[0]
                 val y = locations[1]
                 val height =
                     resources.displayMetrics.heightPixels - (binding.ivShare.measuredHeight + y) - binding.root.context.dpToPx(
@@ -76,6 +78,7 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
     }
 
     private fun updateView(playlist: PlaylistUi?) {
+        Log.d("custom-pa", playlist.toString())
         playlist?.let {
             updateMenuState(it)
             adapter.tracks = it.tracksList.map { TrackUi.mapFrom(it) }
@@ -84,6 +87,8 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
             if (hasImage) {
                 Glide.with(binding.root)
                     .load(it.path)
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
                     .transform(CenterCrop())
                     .placeholder(R.drawable.ic_placeholder)
                     .into(binding.ivPlaylist)
@@ -109,6 +114,8 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
             tvShareMenu.setOnClickListener { sharePlaylist(playlist.shareText) }
             Glide.with(root)
                 .load(playlist.path)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .transform(CenterCrop(), RoundedCorners(requireContext().dpToPx(8)))
                 .placeholder(R.drawable.ic_placeholder).into(ivPlaylistMenu)
             tvPlaylistNameMenu.text = playlist.name
@@ -118,14 +125,17 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
                     requireContext(),
                     R.style.AppBottomSheetDialogTheme
                 )
-                    .setTitle(R.string.delete_playlist)
+                    .setTitle(R.string.delete_playlist_confirm)
                     .setNegativeButton(R.string.no) { dialog, _ ->
                         dialog.dismiss()
                     }.setPositiveButton(R.string.yes) { _, _ ->
                         viewModel.deletePlaylist(playlist)
                     }.show()
             }
-            tvEditMenu
+            tvEditMenu.setOnClickListener {
+                val action = Actions.ToEditPlaylist(playlist.id!!)
+                findNavController().navigate(action.id, action.bundle)
+            }
         }
     }
 

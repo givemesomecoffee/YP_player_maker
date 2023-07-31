@@ -1,14 +1,12 @@
-package givemesomecoffee.ru.playlistmaker.feature.playlist_card.domain
+package givemesomecoffee.ru.playlistmaker.feature.media.domain
 
 import givemesomecoffee.ru.playlistmaker.core.data.playlist.PlayListRepository
 import givemesomecoffee.ru.playlistmaker.core.domain.playlist.Playlist
-import kotlinx.coroutines.flow.Flow
 
 class GetPlaylistUseCase(
     private val playListRepository: PlayListRepository
 ) {
-
-    fun invoke(id: Long): Flow<Playlist> {
-        return playListRepository.trackPlaylist(id)
+    suspend fun invoke(id: Long): Playlist {
+        return playListRepository.getPlaylist(id)
     }
 }

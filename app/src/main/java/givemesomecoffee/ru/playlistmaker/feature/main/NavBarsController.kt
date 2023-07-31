@@ -1,5 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.main
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
 interface NavBarsController {
@@ -19,4 +20,8 @@ fun Fragment.setFullScreen(isFullScreen: Boolean = false) {
         hideToolbar(isFullScreen)
     }
 
+}
+
+fun Fragment.setToolbarTitle(text: String){
+    (requireActivity() as AppCompatActivity).supportActionBar?.title = text
 }
