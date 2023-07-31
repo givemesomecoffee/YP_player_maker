@@ -3,4 +3,7 @@
     <style name="ToolbarTheme" parent="Theme.PlaylistMaker.Light">
         <item name="colorControlNormal">?colorOnPrimary</item>
     </style>
+    <style name="ToolbarTheme.AlwaysBlack">
+        <item name="colorControlNormal">@color/yp_black</item>
+    </style>
 </resources>

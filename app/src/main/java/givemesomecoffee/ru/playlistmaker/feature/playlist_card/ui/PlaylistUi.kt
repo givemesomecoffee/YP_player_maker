@@ -10,7 +10,8 @@ data class PlaylistUi(
     override val path: String?,
     override val tracks: List<String>,
     override val size: Int,
-    val duration: Long
+    val duration: Long,
+    val tracksList: List<Track>
 ) : Playlist {
     companion object{
         fun mapFrom(playlist: Playlist, tracks: List<Track>): PlaylistUi {
@@ -21,7 +22,8 @@ data class PlaylistUi(
                 playlist.path,
                 playlist.tracks,
                 playlist.size,
-                tracks.sumOf { it.trackTimeMillis }
+                tracks.sumOf { it.trackTimeMillis },
+                tracks
             )
         }
     }

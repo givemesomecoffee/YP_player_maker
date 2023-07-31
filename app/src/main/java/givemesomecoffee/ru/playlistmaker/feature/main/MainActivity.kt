@@ -46,6 +46,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavBarsControlle
     }
 
     override fun setFullScreen(isFullScreen: Boolean) {
-        binding.fullscreenPlaceholder.isVisible = !isFullScreen
+        hideBottomNavigation(isFullScreen)
+        hideToolbar(isFullScreen)
+    }
+
+    override fun hideToolbar(hide: Boolean) {
+        binding.toolbar.isVisible = !hide
     }
 }
