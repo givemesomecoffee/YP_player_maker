@@ -19,4 +19,11 @@ interface PlaylistsDao {
 
     @Query("SELECT * FROM playlists  WHERE id = :id LIMIT 1")
     fun getPlaylist(id: String): PlaylistEntity
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertPlaylistTrack(track: PlaylistTrackEntity)
+
+    @Query("SELECT * FROM playlist_tracks WHERE trackId IN (:ids)")
+    fun getPlaylistTracks(ids: List<String>): List<PlaylistTrackEntity>
+
 }

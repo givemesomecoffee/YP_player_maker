@@ -1,5 +1,6 @@
 package givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,6 +21,7 @@ class PlaylistCardViewModel(
         viewModelScope.launch{
             val playlist = getPlaylistUseCase.invoke(id)
             val tracks = getTracksUseCase.invoke(playlist.tracks)
+            Log.d("custom", tracks.toString())
            _state.value = PlaylistUi.mapFrom(playlist, tracks)
         }
     }

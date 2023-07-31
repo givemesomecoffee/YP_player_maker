@@ -59,7 +59,7 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
             override fun onGlobalLayout() {
                 binding.ivShare.viewTreeObserver.removeGlobalOnLayoutListener(this)
                 val locations = IntArray(2)
-                binding.ivShare.getLocationOnScreen(locations)
+                binding.ivShare.getLocationInWindow(locations)
                 val x = locations[0]
                 val y = locations[1]
                 val height =
