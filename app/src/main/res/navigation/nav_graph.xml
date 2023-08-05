@@ -37,4 +37,8 @@
     <action
         android:id="@+id/action_global_addToPlayListFragment"
         app:destination="@id/addToPlayListFragment" />
+    <fragment
+        android:id="@+id/playlistCardFragment"
+        android:name="givemesomecoffee.ru.playlistmaker.feature.playlist_card.ui.PlaylistCardFragment"
+       /><action android:id="@+id/action_global_playlistCardFragment" app:destination="@id/playlistCardFragment"/>
 </navigation>

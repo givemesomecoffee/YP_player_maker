@@ -17,17 +17,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavBarsControlle
 
     private val binding: ActivityMainBinding by viewBinding()
     override fun onSupportNavigateUp(): Boolean {
-
         onBackPressed()
         return true
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.elevation = 0f
+        setSupportActionBar(binding.toolbar)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -40,13 +36,21 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), NavBarsControlle
         }.toSet()
         setupActionBarWithNavController(navController, AppBarConfiguration(startDestinations))
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            hideBottomNavigation(
-                false
-            )
+            hideBottomNavigation(false)
+            setFullScreen(false)
         }
     }
 
     override fun hideBottomNavigation(hide: Boolean) {
-      binding.bottomNav.isVisible = !hide
+        binding.bottomNav.isVisible = !hide
+    }
+
+    override fun setFullScreen(isFullScreen: Boolean) {
+        hideBottomNavigation(isFullScreen)
+        hideToolbar(isFullScreen)
+    }
+
+    override fun hideToolbar(hide: Boolean) {
+        binding.toolbar.isVisible = !hide
     }
 }

@@ -2,6 +2,7 @@ package givemesomecoffee.ru.playlistmaker.feature.media.di
 
 import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.FavouriteTracksInteractor
 import givemesomecoffee.ru.playlistmaker.feature.media.domain.CreatePlayListUseCase
+import givemesomecoffee.ru.playlistmaker.feature.media.domain.GetPlaylistUseCase
 import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.FavouritesViewModel
 import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.PlaylistsViewModel
 import givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.create_playlist.PlayListCreateViewModel
@@ -12,6 +13,7 @@ import org.koin.dsl.module
 val mediaModule = module {
     singleOf(::FavouriteTracksInteractor)
     singleOf(::CreatePlayListUseCase)
+    singleOf(::GetPlaylistUseCase)
     viewModelOf(::PlaylistsViewModel)
     viewModelOf(::FavouritesViewModel)
     viewModelOf(::PlayListCreateViewModel)

@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".feature.main.MainActivity">
 
+    <View
+        android:id="@+id/fullscreen_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
@@ -14,7 +22,7 @@
         android:layout_height="0dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:navGraph="@navigation/nav_graph"
         tools:layout="@layout/fragment_search" />
 
@@ -37,4 +45,15 @@
         android:layout_height="0.5dp"
         android:background="@color/yp_light_Gray"
         app:layout_constraintTop_toTopOf="@id/bottom_nav" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/ToolbarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextAppearance="@style/Primary.Medium.22"
+        tools:title="@tools:sample/lorem" />
 </androidx.constraintlayout.widget.ConstraintLayout>

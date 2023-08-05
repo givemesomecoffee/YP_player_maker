@@ -9,7 +9,8 @@ import androidx.room.TypeConverters
     version = 1,
     entities = [
         FavouriteTrack::class,
-        PlaylistEntity::class
+        PlaylistEntity::class,
+        PlaylistTrackEntity::class
     ]
 )
 @TypeConverters(Converters::class)

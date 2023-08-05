@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Toolbar" parent="Widget.MaterialComponents.Toolbar">
-        <item name="titleTextAppearance">@style/Primary.Medium.22</item>
-        <item name="android:background">?colorPrimary</item>
-        <item name="titleTextColor">?colorOnPrimary</item>
+    <style name="ToolbarTheme" parent="Theme.PlaylistMaker.Light">
+        <item name="colorControlNormal">?colorOnPrimary</item>
+    </style>
+    <style name="ToolbarTheme.AlwaysBlack">
+        <item name="colorControlNormal">@color/yp_black</item>
     </style>
 </resources>
