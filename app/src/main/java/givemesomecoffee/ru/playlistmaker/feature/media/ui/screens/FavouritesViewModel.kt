@@ -1,6 +1,5 @@
 package givemesomecoffee.ru.playlistmaker.feature.media.ui.screens
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
@@ -30,7 +29,6 @@ class FavouritesViewModel(
     private fun trackFavourites() {
         trackJob = viewModelScope.launch {
             favouriteTracksInteractor.getFavouriteTracks().collectLatest {
-                Log.d("custom", it.toString())
                 _state.value = it.map {
                     TrackUi.mapFrom(it)
                 }

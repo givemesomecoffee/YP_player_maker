@@ -1,8 +1,8 @@
 package givemesomecoffee.ru.playlistmaker.core.presentation.player
 
+import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
@@ -15,7 +15,7 @@ import java.util.Locale
 
 class Player : PlayerHolder {
     private var mediaPlayer = MediaPlayer()
-    val _flow = MutableStateFlow(PlayerStateUi(progress = null, state = PlayerState.STATE_DEFAULT))
+    private val _flow = MutableStateFlow(PlayerStateUi(progress = null, state = PlayerState.STATE_DEFAULT))
     override val playerState: StateFlow<PlayerStateUi> = _flow
     private var progressJob: Job? = null
     private var scope = CoroutineScope(SupervisorJob())
@@ -40,10 +40,12 @@ class Player : PlayerHolder {
         mediaPlayer.pause()
     }
 
-    override fun preparePlayer(defaultLifecycleObserver: AppCompatActivity, url: String) {
-        mediaPlayer.setDataSource(defaultLifecycleObserver.applicationContext, Uri.parse(url))
+    override fun preparePlayer(context: Context, url: String) {
+        mediaPlayer.reset()
+        mediaPlayer.setDataSource(context, Uri.parse(url))
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
+            mediaPlayer.seekTo(0)
             updateState(PlayerState.STATE_PREPARED)
             _flow.value = _flow.value.copy(progress = resolveProgress(true))
         }
@@ -52,6 +54,7 @@ class Player : PlayerHolder {
             updateState(PlayerState.STATE_PREPARED)
             _flow.value = _flow.value.copy(progress = resolveProgress(true))
         }
+
     }
 
     private suspend fun updateProgress() {

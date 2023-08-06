@@ -63,8 +63,11 @@ class SearchFragment : Fragment(R.layout.fragment_search), ItemClickListener {
         if (isClickAllowed) {
             isClickAllowed = false
             viewLifecycleOwner.lifecycleScope.launch {
-                delay(CLICK_DEBOUNCE_DELAY)
-                isClickAllowed = true
+              try {
+                    delay(CLICK_DEBOUNCE_DELAY)
+                } finally {
+                  isClickAllowed =   true
+                }
             }
         }
         return current

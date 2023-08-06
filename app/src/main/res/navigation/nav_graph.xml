@@ -11,15 +11,30 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation.SearchFragment"
-        android:label="@string/title_search"/>
+        android:label="@string/title_search" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="givemesomecoffee.ru.playlistmaker.feature.settings.SettingsFragment"
         android:label="@string/title_settings" />
-    <activity
-        android:id="@+id/trackCardActivity"
-        android:name="givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.TrackCardActivity" />
+    <fragment
+        android:id="@+id/playListCreateFragment"
+        android:name="givemesomecoffee.ru.playlistmaker.feature.media.ui.screens.create_playlist.PlayListCreateFragment"
+        android:label="@string/playlist_create_toolbar" />
     <action
-        android:id="@+id/action_global_trackCardActivity"
-        app:destination="@id/trackCardActivity" />
+        android:id="@+id/action_global_playListCreateFragment"
+        app:destination="@id/playListCreateFragment" />
+    <fragment
+        android:id="@+id/trackCardFragment"
+        android:name="givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.TrackCardFragment"
+        android:label="" />
+    <action
+        android:id="@+id/action_global_trackCardFragment"
+        app:destination="@id/trackCardFragment" />
+    <dialog
+        android:id="@+id/addToPlayListFragment"
+        android:name="givemesomecoffee.ru.playlistmaker.feature.track_card.presentation.add_to_playlist.AddToPlayListFragment"
+        android:label="AddToPlayListFragment" />
+    <action
+        android:id="@+id/action_global_addToPlayListFragment"
+        app:destination="@id/addToPlayListFragment" />
 </navigation>

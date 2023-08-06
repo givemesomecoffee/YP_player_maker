@@ -1,6 +1,5 @@
 package givemesomecoffee.ru.playlistmaker.feature.search_screen.presentation
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -60,7 +59,6 @@ class SearchActivityViewModel(private val tracksInteractor: TracksInteractor) :
             val favourites = tracksInteractor.getFavouriteTracksIds()
             withContext(Dispatchers.IO) {
                 tracksInteractor.searchTracks(changedText).collect { result ->
-                    Log.d("custom-test", result.toString())
                     _state.postValue(
                         SearchScreenUi(
                             showError = result.error != null,

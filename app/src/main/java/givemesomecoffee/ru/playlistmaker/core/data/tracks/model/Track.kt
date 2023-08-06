@@ -1,5 +1,7 @@
 package givemesomecoffee.ru.playlistmaker.core.data.tracks.model
 
+import givemesomecoffee.ru.playlistmaker.core.domain.track.TrackModel
+
 interface Track {
     val trackName: String
     val artistName: String
@@ -12,4 +14,19 @@ interface Track {
     val country: String
     val previewUrl: String
     val isFavourite: Boolean
+
+    fun toDomain(): TrackModel {
+        return TrackModel(
+            trackName,
+            artistName,
+            trackTimeMillis,
+            artworkUrl100,
+            trackId,
+            collectionName,
+            releaseDate,
+            primaryGenreName,
+            country,
+            previewUrl
+        )
+    }
 }
