@@ -96,6 +96,7 @@ class TrackCardFragment : Fragment(R.layout.activity_track_card) {
                     .load(track.artworkUrl100.replaceAfterLast(URL_DELIMITER, IMAGE_SIZE))
                     .transform(CenterCrop(), RoundedCorners(requireContext().dpToPx(8)))
                     .placeholder(R.drawable.ic_placeholder).into(findViewById(R.id.track_image))
+
                 findViewById<TextView>(R.id.track_title).text = track.trackName
                 findViewById<TextView>(R.id.track_artist).text = track.artistName
                 infoAdapter.info = track.info

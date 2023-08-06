@@ -4,8 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import givemesomecoffee.ru.playlistmaker.core.data.tracks.model.Track
 
-@Entity(tableName = "favourite_tracks")
-data class FavouriteTrack(
+@Entity(tableName = "playlist_tracks")
+data class PlaylistTrackEntity (
     override val trackName: String,
     override val artistName: String,
     override val trackTimeMillis: Long,
@@ -13,18 +13,17 @@ data class FavouriteTrack(
     @PrimaryKey
     override val trackId: String,
     override val collectionName: String?,
-    override val releaseDate: String,
+    override val releaseDate: String?,
     override val primaryGenreName: String,
     override val country: String,
+    override val artworkUrl160: String?,
     override val previewUrl: String,
-    override val isFavourite: Boolean = true,
+    override val isFavourite: Boolean,
     val timestamp: Long,
-    override val artworkUrl160: String?
-) : Track {
-
-    companion object {
-        fun mapFrom(track: Track): FavouriteTrack {
-            return FavouriteTrack(
+): Track {
+    companion object{
+        fun mapFrom(track: Track): PlaylistTrackEntity {
+            return PlaylistTrackEntity(
                 track.trackName,
                 track.artistName,
                 track.trackTimeMillis,
@@ -34,10 +33,10 @@ data class FavouriteTrack(
                 track.releaseDate.orEmpty(),
                 track.primaryGenreName,
                 track.country,
+                track.artworkUrl160,
                 track.previewUrl,
-                isFavourite = true,
-                timestamp = System.currentTimeMillis(),
-                artworkUrl160 = track.artworkUrl160
+                false,
+                timestamp = System.currentTimeMillis()
             )
         }
     }

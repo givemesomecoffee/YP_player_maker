@@ -14,6 +14,7 @@ interface Track {
     val country: String
     val previewUrl: String
     val isFavourite: Boolean
+    val artworkUrl160: String?
 
     fun toDomain(): TrackModel {
         return TrackModel(
@@ -26,7 +27,8 @@ interface Track {
             releaseDate,
             primaryGenreName,
             country,
-            previewUrl
+            previewUrl,
+            artworkUrl160
         )
     }
 }
