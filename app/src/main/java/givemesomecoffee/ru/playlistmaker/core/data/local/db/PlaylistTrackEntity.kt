@@ -16,8 +16,10 @@ data class PlaylistTrackEntity (
     override val releaseDate: String?,
     override val primaryGenreName: String,
     override val country: String,
+    override val artworkUrl160: String?,
     override val previewUrl: String,
-    override val isFavourite: Boolean
+    override val isFavourite: Boolean,
+    val timestamp: Long,
 ): Track {
     companion object{
         fun mapFrom(track: Track): PlaylistTrackEntity {
@@ -31,8 +33,10 @@ data class PlaylistTrackEntity (
                 track.releaseDate.orEmpty(),
                 track.primaryGenreName,
                 track.country,
+                track.artworkUrl160,
                 track.previewUrl,
-                false
+                false,
+                timestamp = System.currentTimeMillis()
             )
         }
     }

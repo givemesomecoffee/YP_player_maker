@@ -20,6 +20,7 @@ import givemesomecoffee.ru.playlistmaker.R
 import givemesomecoffee.ru.playlistmaker.core.navigation.Actions
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.dpToPx
 import givemesomecoffee.ru.playlistmaker.core.presentation.utils.resolveTracksCounter
+import givemesomecoffee.ru.playlistmaker.core.presentation.utils.showToast
 import givemesomecoffee.ru.playlistmaker.databinding.FragmentPlaylistCardBinding
 import givemesomecoffee.ru.playlistmaker.feature.main.setFullScreen
 import givemesomecoffee.ru.playlistmaker.feature.search_screen.model.TrackUi
@@ -70,7 +71,9 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
                     resources.displayMetrics.heightPixels - (binding.ivShare.measuredHeight + y) - binding.root.context.dpToPx(
                         24
                     )
-                BottomSheetBehavior.from(binding.container).peekHeight = height
+                BottomSheetBehavior.from(binding.container).apply {
+                    peekHeight = height
+                }
             }
         })
         viewModel.state.observe(viewLifecycleOwner, ::updateView)
@@ -80,6 +83,7 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
         playlist?.let {
             updateMenuState(it)
             adapter.tracks = it.tracksList.map { TrackUi.mapFrom(it) }
+            binding.tvTracksPlaceholder.isVisible = it.tracksList.isEmpty()
             adapter.notifyDataSetChanged()
             val hasImage = !it.path.isNullOrEmpty()
             if (hasImage) {
@@ -99,7 +103,7 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
                 tvPlaylistDescription.text = it.description
             }
             binding.ivShare.setOnClickListener {
-                sharePlaylist(playlist.shareText)
+                sharePlaylist(playlist.shareText, playlist.tracksList.isNotEmpty())
             }
             binding.ivMenu.setOnClickListener {
                 BottomSheetBehavior.from(binding.menu).state = BottomSheetBehavior.STATE_HALF_EXPANDED
@@ -109,7 +113,12 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
 
     private fun updateMenuState(playlist: PlaylistUi){
         binding.run {
-            tvShareMenu.setOnClickListener { sharePlaylist(playlist.shareText) }
+            tvShareMenu.setOnClickListener {
+                sharePlaylist(playlist.shareText, playlist.tracksList.isNotEmpty())
+                if(playlist.tracksList.isEmpty()) {
+                    BottomSheetBehavior.from(menu).state = BottomSheetBehavior.STATE_HIDDEN
+                }
+            }
             Glide.with(root)
                 .load(playlist.path)
                 .skipMemoryCache(true)
@@ -123,11 +132,12 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
                     requireContext(),
                     R.style.AppBottomSheetDialogTheme
                 )
-                    .setTitle(R.string.delete_playlist_confirm)
+                    .setTitle(String.format(getString(R.string.delete_playlist_confirm), playlist.name))
                     .setNegativeButton(R.string.no) { dialog, _ ->
                         dialog.dismiss()
                     }.setPositiveButton(R.string.yes) { _, _ ->
                         viewModel.deletePlaylist(playlist)
+                        findNavController().popBackStack()
                     }.show()
             }
             tvEditMenu.setOnClickListener {
@@ -165,15 +175,19 @@ class PlaylistCardFragment : Fragment(R.layout.fragment_playlist_card), ItemClic
         }
     }
 
-    private fun sharePlaylist(text: String) {
-        val sendIntent: Intent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, text)
-            type = "text/plain"
-        }
+    private fun sharePlaylist(text: String, canShare: Boolean) {
+        if(canShare) {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, text)
+                type = "text/plain"
+            }
 
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        startActivity(shareIntent)
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        } else {
+            showToast(getString(R.string.playlist_empty_share))
+        }
     }
 
     companion object {

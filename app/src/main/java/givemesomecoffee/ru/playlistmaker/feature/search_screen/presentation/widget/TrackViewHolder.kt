@@ -23,7 +23,7 @@ class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         trackTitle.text = model.trackName
         trackInfoArtist.text = model.artistName
         trackInfoDuration.text = model.trackTime
-        Glide.with(itemView).load(model.artworkUrl100)
+        Glide.with(itemView).load(model.artworkUrl)
             .skipMemoryCache(true)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .transform(CenterCrop(), RoundedCorners(itemView.context.dpToPx(2)))

@@ -18,7 +18,8 @@ data class FavouriteTrack(
     override val country: String,
     override val previewUrl: String,
     override val isFavourite: Boolean = true,
-    val timestamp: Long
+    val timestamp: Long,
+    override val artworkUrl160: String?
 ) : Track {
 
     companion object {
@@ -35,7 +36,8 @@ data class FavouriteTrack(
                 track.country,
                 track.previewUrl,
                 isFavourite = true,
-                timestamp = System.currentTimeMillis()
+                timestamp = System.currentTimeMillis(),
+                artworkUrl160 = track.artworkUrl160
             )
         }
     }

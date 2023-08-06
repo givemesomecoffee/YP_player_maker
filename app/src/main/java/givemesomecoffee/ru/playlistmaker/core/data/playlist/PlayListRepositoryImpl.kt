@@ -12,9 +12,9 @@ import kotlinx.coroutines.withContext
 class PlayListRepositoryImpl(
     private val playlistsDao: PlaylistsDao,
     private val tracksApi: TracksApi
-): PlayListRepository {
+) : PlayListRepository {
 
-    override suspend fun createPlaylist(playlist: Playlist){
+    override suspend fun createPlaylist(playlist: Playlist) {
         playlistsDao.insertPlaylist(playlist.toLocal())
     }
 
@@ -35,8 +35,8 @@ class PlayListRepositoryImpl(
 
     override fun trackPlaylist(playlistId: Long) = playlistsDao.trackPlaylist(playlistId)
     override suspend fun getPlaylistTracks(ids: List<String>): List<Track> {
-        return withContext(Dispatchers.IO){
-            playlistsDao.getPlaylistTracks(ids)
+        return withContext(Dispatchers.IO) {
+            playlistsDao.getPlaylistTracks(ids).sortedByDescending { it.timestamp }
         }
     }
 
@@ -51,20 +51,19 @@ class PlayListRepositoryImpl(
     }
 
     override suspend fun deletePlaylist(playlist: Playlist) {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             playlistsDao.deletePlaylist(playlist.id!!)
-            playlist.tracks.forEach{
+            playlist.tracks.forEach {
                 cleanUpTrack(trackId = it)
             }
 
         }
     }
 
-    private suspend fun cleanUpTrack(trackId: String){
-        playlistsDao.getPlaylists().mapNotNull { it.tracks.firstOrNull { it == trackId } }
-            .takeIf {
-                it.isNotEmpty()
-            }?.let { playlistsDao.deleteTrack(trackId) }
+    private suspend fun cleanUpTrack(trackId: String) {
+        playlistsDao.getPlaylists().mapNotNull { playlist ->
+            playlist.tracks.firstOrNull { id -> id == trackId }
+        }.takeIf { it.isEmpty() }?.let { playlistsDao.deleteTrack(trackId) }
     }
 
 }

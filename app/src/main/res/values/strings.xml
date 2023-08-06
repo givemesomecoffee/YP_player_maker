@@ -50,6 +50,7 @@
     <string name="playlist_delete">Удалить плейлист</string>
     <string name="playlist_edit">Редактировать информацию</string>
     <string name="playlist_edit_confirm">Сохранить</string>
-
+    <string name="playlist_empty_message">В плейлист не добавлен ни один трек</string>
+    <string name="playlist_empty_share">В этом плейлисте нет списка треков, которым можно поделиться</string>
 
 </resources>

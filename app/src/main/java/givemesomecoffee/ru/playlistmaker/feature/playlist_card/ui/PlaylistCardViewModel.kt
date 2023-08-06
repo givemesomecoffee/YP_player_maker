@@ -30,11 +30,11 @@ class PlaylistCardViewModel(
         this.id = id
         viewModelScope.launch {
             getPlaylistUseCase.invoke(id).collectLatest {
-                val tracks = getTracksUseCase.invoke(it.tracks)
-                val favourites = tracksInteractor.getFavouriteTracksIds()
-                _state.value = PlaylistUi.mapFrom(
-                    it,
-                    tracks.map { it.toDomain().copy(isFavourite = it.trackId in favourites) })
+                    val tracks = getTracksUseCase.invoke(it.tracks)
+                    val favourites = tracksInteractor.getFavouriteTracksIds()
+                    _state.value = PlaylistUi.mapFrom(
+                        it,
+                        tracks.map { it.toDomain().copy(isFavourite = it.trackId in favourites) })
             }
         }
     }

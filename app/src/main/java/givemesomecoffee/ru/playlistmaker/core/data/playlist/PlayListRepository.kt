@@ -13,7 +13,7 @@ interface PlayListRepository {
 
     suspend fun getPlaylist(id: Long): Playlist
 
-    fun trackPlaylist(playlistId: Long): Flow<Playlist>
+    fun trackPlaylist(playlistId: Long): Flow<Playlist?>
 
     suspend fun getPlaylistTracks(ids: List<String>): List<Track>
 

@@ -13,6 +13,7 @@ data class TrackModel(
     override val primaryGenreName: String,
     override val country: String,
     override val previewUrl: String,
-    override val isFavourite: Boolean = false
+    override val artworkUrl160: String?,
+    override val isFavourite: Boolean = false,
 ) : Track
 

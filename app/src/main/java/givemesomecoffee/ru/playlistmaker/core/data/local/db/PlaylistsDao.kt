@@ -24,7 +24,7 @@ interface PlaylistsDao {
     suspend fun getPlaylist(id: Long): PlaylistEntity
 
     @Query("SELECT * FROM playlists  WHERE id = :id")
-    fun trackPlaylist(id: Long): Flow<PlaylistEntity>
+    fun trackPlaylist(id: Long): Flow<PlaylistEntity?>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPlaylistTrack(track: PlaylistTrackEntity)
 

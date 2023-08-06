@@ -9,6 +9,7 @@ data class TrackEntity(
     override val artistName: String,
     override val trackTimeMillis: Long,
     override val artworkUrl100: String,
+    override val artworkUrl160: String?,
     override val trackId: String,
     override val collectionName: String?,
     override val releaseDate: String?,
